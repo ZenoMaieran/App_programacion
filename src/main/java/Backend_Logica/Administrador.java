@@ -12,6 +12,7 @@ public class Administrador extends Persona {
 
     public Administrador(String nombre, String correo, String clave) {
         super(nombre, correo, clave);
+        System.out.println("Hola");
     }
     
 }
