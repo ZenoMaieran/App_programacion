@@ -4,7 +4,7 @@
  */
 package Backend_Logica;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  *
@@ -12,22 +12,22 @@ import java.time.LocalDateTime;
  */
 public class TarjetaCredito {
 
-    public TarjetaCredito(String nombreTitular, int numero, LocalDateTime fechaCaducidad) {
+    public TarjetaCredito(String nombreTitular, String numero, LocalDate fechaCaducidad) {
         this.nombreTitular = nombreTitular;
         this.numero = numero;
         this.fechaCaducidad = fechaCaducidad;
     }
     
     private String nombreTitular;
-    private int numero;
-    private LocalDateTime fechaCaducidad;
+    private String numero;   //int a String porque int no soporta un número enorme
+    private LocalDate fechaCaducidad;
 
     /**
      * Get the value of fechaCaducidad
      *
      * @return the value of fechaCaducidad
      */
-    public LocalDateTime getFechaCaducidad() {
+    public LocalDate getFechaCaducidad() {
         return fechaCaducidad;
     }
 
@@ -36,7 +36,10 @@ public class TarjetaCredito {
      *
      * @param fechaCaducidad new value of fechaCaducidad
      */
-    public void setFechaCaducidad(LocalDateTime fechaCaducidad) {
+    public void setFechaCaducidad(LocalDate fechaCaducidad) {
+        if (fechaCaducidad == null || fechaCaducidad.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("La fecha de caducidad debe estar en el futuro.");
+        }
         this.fechaCaducidad = fechaCaducidad;
     }
 
@@ -46,7 +49,7 @@ public class TarjetaCredito {
      *
      * @return the value of numero
      */
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
@@ -55,7 +58,10 @@ public class TarjetaCredito {
      *
      * @param numero new value of numero
      */
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
+        if (numero == null || !numero.matches("\\d{16}")) {
+            throw new IllegalArgumentException("El número de tarjeta debe tener exactamente 16 dígitos.");
+        }
         this.numero = numero;
     }
 
@@ -75,9 +81,16 @@ public class TarjetaCredito {
      * @param nombreTitular new value of nombreTitular
      */
     public void setNombreTitular(String nombreTitular) {
+        if (nombreTitular == null || nombreTitular.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre del titular no puede estar vacío.");
+        }
         this.nombreTitular = nombreTitular;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "TarjetaCredito{" + "nombreTitular=" + nombreTitular + ", numero=" + numero + ", fechaCaducidad=" + fechaCaducidad + '}';
