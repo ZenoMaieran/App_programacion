@@ -37,6 +37,10 @@ public class Direccion {
      * @param codigoPostal new value of codigoPostal
      */
     public void setCodigoPostal(int codigoPostal) {
+        String aux = String.valueOf(codigoPostal);
+        if (aux.length() != 5){
+            throw new IllegalArgumentException("El codigo postal es incorrecto (5 digitos).");
+        }
         this.codigoPostal = codigoPostal;
     }
 
@@ -56,6 +60,9 @@ public class Direccion {
      * @param ciudad new value of ciudad
      */
     public void setCiudad(String ciudad) {
+        if (ciudad == null || ciudad.trim().isEmpty()) {
+            throw new IllegalArgumentException("El campo de ciudad esta vacio.");
+        }
         this.ciudad = ciudad;
     }
 
@@ -75,6 +82,9 @@ public class Direccion {
      * @param numero new value of numero
      */
     public void setNumero(int numero) {
+        if (numero == 0){
+            throw new IllegalArgumentException("El numero introducido no es correcto.");
+        }
         this.numero = numero;
     }
 
@@ -94,6 +104,9 @@ public class Direccion {
      * @param calle new value of calle
      */
     public void setCalle(String calle) {
+        if (calle == null || calle.trim().isEmpty()) {
+            throw new IllegalArgumentException("El campo de calle esta vacio.");
+        }
         this.calle = calle;
     }
 

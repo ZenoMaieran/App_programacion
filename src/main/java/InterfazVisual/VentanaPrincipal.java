@@ -26,17 +26,66 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        titulo = new javax.swing.JLabel();
+        texto_CrearCuenta = new javax.swing.JTextField();
+        boton_IniciarSesion = new javax.swing.JButton();
+        boton_CrearCuenta = new javax.swing.JButton();
+        texto_IniciarSesion = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("JavaEvents");
+
+        titulo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        titulo.setForeground(new java.awt.Color(30, 30, 30));
+        titulo.setText("Bienvenido a JavaEvents");
+        titulo.setToolTipText("");
+
+        texto_CrearCuenta.setEditable(false);
+        texto_CrearCuenta.setBackground(new java.awt.Color(70, 130, 180));
+        texto_CrearCuenta.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        texto_CrearCuenta.setText("Crear Cuenta");
+        texto_CrearCuenta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        texto_IniciarSesion.setBackground(new java.awt.Color(51, 153, 255));
+        texto_IniciarSesion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        texto_IniciarSesion.setText("Iniciar Sesión");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(titulo)
+                .addContainerGap(54, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(93, 93, 93)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(texto_IniciarSesion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(texto_CrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(84, 84, 84))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(boton_IniciarSesion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(boton_CrearCuenta)
+                        .addGap(102, 102, 102))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(titulo)
+                .addGap(73, 73, 73)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(texto_CrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(texto_IniciarSesion))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(boton_IniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(boton_CrearCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         pack();
@@ -78,5 +127,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton boton_CrearCuenta;
+    private javax.swing.JButton boton_IniciarSesion;
+    private javax.swing.JTextField texto_CrearCuenta;
+    private javax.swing.JLabel texto_IniciarSesion;
+    private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }
