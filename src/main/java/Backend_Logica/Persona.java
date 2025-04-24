@@ -10,9 +10,9 @@ package Backend_Logica;
 public class Persona {
 
     public Persona(String nombre, String correo, String clave) {
-        this.nombre = nombre;
-        this.correo = correo;
-        this.clave = clave;
+        this.setNombre(nombre); //this.setXXXX en vez de this.XXXX para usar las mismas validaciones del setter en el constructor. Eso asegura que siempre se revisan los datos, tanto al crear como al modificar.
+        this.setCorreo(correo);
+        this.setClave(clave);
     }
    
     private String nombre;
@@ -34,10 +34,12 @@ public class Persona {
      * @param clave new value of clave
      */
     public void setClave(String clave) {
+       if (clave == null || clave.length() < 6) {
+        System.out.println("La clave debe tener al menos 6 caracteres.");
+    } else {
         this.clave = clave;
     }
-
-
+}
     /**
      * Get the value of correo
      *
@@ -53,6 +55,7 @@ public class Persona {
      * @param correo new value of correo
      */
     public void setCorreo(String correo) {
+        if (correo != null && correo.contains("@"))
         this.correo = correo;
     }
     /**
@@ -70,11 +73,14 @@ public class Persona {
      * @param nombre new value of nombre
      */
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        if (nombre == null || nombre.equals("")) {
+            System.out.println("El nombre no puede estar vacío.");
+        } else {
+            this.nombre = nombre;
+        }
     }
-
     @Override
     public String toString() {
-        return "Persona{" + "nombre=" + nombre + ", correo=" + correo + ", clave=" + clave + '}';
+        return "Persona: " + nombre + ", Correo: " + correo; //Por seguridad, nunca debemos imprimir contraseñas.
     }
 }
