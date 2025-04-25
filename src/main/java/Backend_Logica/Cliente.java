@@ -10,17 +10,17 @@ package Backend_Logica;
  */
 public class Cliente extends Persona {
 
-    public Cliente(Direccion direccion, TarjetaCredito tarjetaCredito, int telefono, boolean vip, String nombre, String correo, String clave) {
+    public Cliente(Direccion direccion, TarjetaCredito tarjetaCredito, String telefono, boolean vip, String nombre, String correo, String clave) {
         super(nombre, correo, clave);
-        this.direccion = direccion;
-        this.tarjetaCredito = tarjetaCredito;
-        this.telefono = telefono;
-        this.vip = vip;
+        this.setDireccion(direccion);
+        this.setTarjetaCredito(tarjetaCredito);
+        this.setTelefono(telefono);
+        this.setVip(vip);
     }
     
     private Direccion direccion;
     private TarjetaCredito tarjetaCredito;
-    private int telefono;
+    private String telefono;
     private boolean vip;
 
     /**
@@ -47,7 +47,7 @@ public class Cliente extends Persona {
      *
      * @return the value of telefono
      */
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
@@ -56,10 +56,13 @@ public class Cliente extends Persona {
      *
      * @param telefono new value of telefono
      */
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
-    }
-
+    public void setTelefono(String telefono) {
+        if (telefono == null || telefono.length() < 9) {
+            System.out.println("Teléfono no válido.");
+        } else {
+            this.telefono = telefono;
+        }
+}
 
     /**
      * Get the value of tarjetaCredito
@@ -76,9 +79,12 @@ public class Cliente extends Persona {
      * @param tarjetaCredito new value of tarjetaCredito
      */
     public void setTarjetaCredito(TarjetaCredito tarjetaCredito) {
-        this.tarjetaCredito = tarjetaCredito;
+        if (tarjetaCredito == null) {
+            System.out.println("La tarjeta de crédito no puede ser nula.");
+        } else {
+            this.tarjetaCredito = tarjetaCredito;
+        }
     }
-
 
     /**
      * Get the value of direccion
@@ -88,20 +94,26 @@ public class Cliente extends Persona {
     public Direccion getDireccion() {
         return direccion;
     }
-
+    
     /**
      * Set the value of direccion
      *
      * @param direccion new value of direccion
      */
     public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
-    }
+        if (direccion == null) {
+        System.out.println("La dirección no puede ser nula.");
+        } else {
+           this.direccion = direccion;
+        }
+}
 
     @Override
     public String toString() {
-        return "Cliente{" + "direccion=" + direccion + ", tarjetaCredito=" + tarjetaCredito + ", telefono=" + telefono + ", vip=" + vip + '}';
+        return super.toString() + "\n" +
+               "Teléfono: " + telefono + "\n" +
+               "Dirección: " + direccion + "\n" +
+               "Tarjeta: " + tarjetaCredito + "\n" +
+               "VIP: " + (vip ? "Sí" : "No");
     }
-
-    
 }
