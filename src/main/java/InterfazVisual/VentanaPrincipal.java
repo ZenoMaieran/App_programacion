@@ -27,10 +27,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         titulo = new javax.swing.JLabel();
-        texto_CrearCuenta = new javax.swing.JTextField();
         boton_IniciarSesion = new javax.swing.JButton();
         boton_CrearCuenta = new javax.swing.JButton();
         texto_IniciarSesion = new javax.swing.JLabel();
+        texto_CrearUsuario = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JavaEvents");
@@ -40,15 +40,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         titulo.setText("Bienvenido a JavaEvents");
         titulo.setToolTipText("");
 
-        texto_CrearCuenta.setEditable(false);
-        texto_CrearCuenta.setBackground(new java.awt.Color(70, 130, 180));
-        texto_CrearCuenta.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        texto_CrearCuenta.setText("Crear Cuenta");
-        texto_CrearCuenta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        boton_IniciarSesion.setBackground(new java.awt.Color(0, 51, 204));
+        boton_IniciarSesion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        boton_IniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_IniciarSesionActionPerformed(evt);
+            }
+        });
+
+        boton_CrearCuenta.setBackground(new java.awt.Color(0, 51, 204));
+        boton_CrearCuenta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        boton_CrearCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_CrearCuentaActionPerformed(evt);
+            }
+        });
 
         texto_IniciarSesion.setBackground(new java.awt.Color(51, 153, 255));
         texto_IniciarSesion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         texto_IniciarSesion.setText("Iniciar Sesión");
+
+        texto_CrearUsuario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        texto_CrearUsuario.setText("Crear Usuario");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,37 +72,49 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addComponent(titulo)
                 .addContainerGap(54, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(texto_IniciarSesion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(texto_CrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(84, 84, 84))
+                        .addGap(93, 93, 93)
+                        .addComponent(texto_IniciarSesion))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(boton_IniciarSesion)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(boton_CrearCuenta)
-                        .addGap(102, 102, 102))))
+                        .addGap(112, 112, 112)
+                        .addComponent(boton_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(texto_CrearUsuario)
+                        .addGap(102, 102, 102))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(boton_CrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(111, 111, 111))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(titulo)
-                .addGap(73, 73, 73)
+                .addGap(78, 78, 78)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(texto_CrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(texto_IniciarSesion))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(boton_IniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(boton_CrearCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(94, Short.MAX_VALUE))
+                    .addComponent(texto_IniciarSesion)
+                    .addComponent(texto_CrearUsuario))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(boton_CrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(boton_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void boton_CrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_CrearCuentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_boton_CrearCuentaActionPerformed
+
+    private void boton_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_IniciarSesionActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_boton_IniciarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -129,7 +154,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton boton_CrearCuenta;
     private javax.swing.JButton boton_IniciarSesion;
-    private javax.swing.JTextField texto_CrearCuenta;
+    private javax.swing.JLabel texto_CrearUsuario;
     private javax.swing.JLabel texto_IniciarSesion;
     private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables

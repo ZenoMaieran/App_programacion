@@ -56,14 +56,6 @@ public class Cliente extends Persona {
      *
      * @param telefono new value of telefono
      */
-    public void setTelefono(int telefono) {
-        String aux = String.valueOf(telefono);
-        if (aux.length() != 9){
-            throw new IllegalArgumentException("El telefono es incorrecto (9 digitos).");
-        }
-        this.telefono = telefono;
-    }
-
     public void setTelefono(String telefono) {
         if (telefono == null || telefono.length() < 9) {
             System.out.println("Teléfono no válido.");
