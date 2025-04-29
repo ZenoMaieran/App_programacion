@@ -113,7 +113,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void boton_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_IniciarSesionActionPerformed
         // TODO add your handling code here:
-        
+        InicioSesion iniciar_sesion = new InicioSesion();
+        iniciar_sesion.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_boton_IniciarSesionActionPerformed
 
     /**
