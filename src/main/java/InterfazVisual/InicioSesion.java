@@ -40,7 +40,7 @@ public class InicioSesion extends javax.swing.JFrame {
         jlabel1.setText("Introduce tu email: ");
 
         try {
-            email.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-####")));
+            email.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }

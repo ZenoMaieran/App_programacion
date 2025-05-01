@@ -18,6 +18,7 @@ public class Cliente extends Persona {
         this.setVip(vip);
     }
     
+    
     private Direccion direccion;
     private TarjetaCredito tarjetaCredito;
     private String telefono;

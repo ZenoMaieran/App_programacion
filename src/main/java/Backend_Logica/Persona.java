@@ -83,7 +83,6 @@ public class Persona {
         if (correo == null || !correo.contains("@")) {
             throw new IllegalArgumentException("Correo electrónico inválido.");
         }
-        if (correo != null && correo.contains("@"))
         this.correo = correo;
     }
 
@@ -105,12 +104,15 @@ public class Persona {
         if (nombre == null || nombre.trim().isEmpty()) {
             throw new IllegalArgumentException("El nombre no puede estar vacío.");
         }
-        this.nombre = nombre;
-        if (nombre == null || nombre.equals("")) {
-            System.out.println("El nombre no puede estar vacío.");
-        } else {
-            this.nombre = nombre;
+        String caracteresEspeciales = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+        for (char c : nombre.toCharArray()){
+            if (Character.isDigit(c)){
+                throw new IllegalArgumentException("El nombre no puede contener numeros");
+            } else if (caracteresEspeciales.indexOf(c) != -1){
+                throw new IllegalArgumentException("El nombre no puede contener caracteres especiales.");
+            }
         }
+        this.nombre = nombre;
     }
     @Override
     public String toString() {
