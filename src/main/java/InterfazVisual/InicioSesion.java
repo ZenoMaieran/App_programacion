@@ -33,7 +33,7 @@ public class InicioSesion extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Iniciar Sesión");
 
         jlabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N

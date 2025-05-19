@@ -109,6 +109,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void boton_CrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_CrearCuentaActionPerformed
         // TODO add your handling code here:
+        CrearUsuario crearUsuario = new CrearUsuario();
+        crearUsuario.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_boton_CrearCuentaActionPerformed
 
     private void boton_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_IniciarSesionActionPerformed
