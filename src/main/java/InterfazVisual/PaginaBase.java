@@ -26,6 +26,8 @@ public class PaginaBase extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
         jLabel1 = new javax.swing.JLabel();
         BusquedaEvento = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -34,10 +36,13 @@ public class PaginaBase extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        Eventos = new javax.swing.JMenu();
-        Reservas = new javax.swing.JMenu();
-        Contacto = new javax.swing.JMenu();
-        CerrarSesion = new javax.swing.JMenu();
+        menuEventos = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenu2.setText("jMenu2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,25 +63,23 @@ public class PaginaBase extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("JavaEvents");
 
-        jMenu1.setText("Inicio");
-        jMenuBar1.add(jMenu1);
+        jMenu1.setText("Eventos");
 
-        Eventos.setText("Eventos");
-        Eventos.addActionListener(new java.awt.event.ActionListener() {
+        menuEventos.setText("Ir a Eventos");
+        menuEventos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EventosActionPerformed(evt);
+                menuEventosActionPerformed(evt);
             }
         });
-        jMenuBar1.add(Eventos);
+        jMenu1.add(menuEventos);
 
-        Reservas.setText("Reservas");
-        jMenuBar1.add(Reservas);
+        jMenuBar1.add(jMenu1);
 
-        Contacto.setText("Contacto");
-        jMenuBar1.add(Contacto);
+        jMenu6.setText("Reservas");
+        jMenuBar1.add(jMenu6);
 
-        CerrarSesion.setText("Cerrar Sesión");
-        jMenuBar1.add(CerrarSesion);
+        jMenu7.setText("Cerrar Sesion");
+        jMenuBar1.add(jMenu7);
 
         setJMenuBar(jMenuBar1);
 
@@ -93,7 +96,6 @@ public class PaginaBase extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1)
                         .addComponent(jLabel2)))
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BusquedaEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ConsultarReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -124,11 +126,6 @@ public class PaginaBase extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void EventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EventosActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_EventosActionPerformed
-
     private void BusquedaEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BusquedaEventoActionPerformed
         // TODO add your handling code here:
         Eventos eventos = new Eventos();
@@ -136,6 +133,13 @@ public class PaginaBase extends javax.swing.JFrame {
         this.setVisible(false);
         
     }//GEN-LAST:event_BusquedaEventoActionPerformed
+
+    private void menuEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEventosActionPerformed
+        // TODO add your handling code here:
+        Eventos eventos = new Eventos();
+        eventos.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_menuEventosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -174,16 +178,17 @@ public class PaginaBase extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BusquedaEvento;
-    private javax.swing.JMenu CerrarSesion;
     private javax.swing.JButton ConsultarReservas;
-    private javax.swing.JMenu Contacto;
-    private javax.swing.JMenu Eventos;
-    private javax.swing.JMenu Reservas;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem menuEventos;
     // End of variables declaration//GEN-END:variables
 }
