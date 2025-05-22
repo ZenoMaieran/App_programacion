@@ -3,18 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package InterfazVisual;
-
+import Backend_Logica.GestorDatosSerializador;
+import Backend_Logica.GestionDatos;
 /**
  *
  * @author anton
  */
 public class PaginaBase extends javax.swing.JFrame {
-
+    
+    private GestionDatos gestor;
+    
     /**
      * Creates new form PaginaBase
      */
     public PaginaBase() {
+        this.setLocationRelativeTo(null);
         initComponents();
+        
     }
 
     /**
@@ -49,7 +54,9 @@ public class PaginaBase extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Buscar un evento:");
+        jLabel1.setAlignmentX(0.5F);
 
+        BusquedaEvento.setAlignmentX(0.5F);
         BusquedaEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BusquedaEventoActionPerformed(evt);
@@ -58,11 +65,16 @@ public class PaginaBase extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Consulta tus reservas:");
+        jLabel2.setAlignmentX(0.5F);
+
+        ConsultarReservas.setAlignmentX(0.5F);
 
         jButton1.setText("MI PERFIL");
+        jButton1.setAlignmentX(0.5F);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("JavaEvents");
+        jLabel3.setAlignmentX(0.5F);
 
         jMenu1.setText("Eventos");
 

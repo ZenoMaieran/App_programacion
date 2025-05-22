@@ -5,6 +5,7 @@
 package InterfazVisual;
 
 import Backend_Logica.Persona;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,11 +14,19 @@ import javax.swing.JOptionPane;
  */
 public class CrearUsuario extends javax.swing.JFrame {
 
+    private JFrame ventanaBase;
+    
     /**
      * Creates new form CrearUsuario
      */
-    public CrearUsuario() {
+    public CrearUsuario(JFrame base) {
+        this.setLocationRelativeTo(null);
+        this.ventanaBase = base;
         initComponents();
+    }
+
+    private CrearUsuario() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -41,6 +50,11 @@ public class CrearUsuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Crear Usuario");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Introduce tu nombre:");
@@ -134,7 +148,15 @@ public class CrearUsuario extends javax.swing.JFrame {
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al crear cuenta", JOptionPane.ERROR_MESSAGE);
         }
+        PaginaBase base = new PaginaBase();
+        this.setVisible(false);
+        base.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        ventanaBase.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

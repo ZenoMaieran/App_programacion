@@ -3,17 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package InterfazVisual;
-
+import Backend_Logica.GestorDatosSerializador;
+import Backend_Logica.GestionDatos;
 /**
  *
  * @author anton
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
+    private GestionDatos gestor;
+    
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
+        gestor = GestorDatosSerializador.cargar();
+        this.setLocationRelativeTo(null);
         initComponents();
     }
 
@@ -25,6 +30,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         titulo = new javax.swing.JLabel();
         boton_IniciarSesion = new javax.swing.JButton();
@@ -34,89 +40,91 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("JavaEvents");
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         titulo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         titulo.setForeground(new java.awt.Color(30, 30, 30));
         titulo.setText("Bienvenido a JavaEvents");
         titulo.setToolTipText("");
+        titulo.setAlignmentX(0.5F);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 36, 0, 54);
+        getContentPane().add(titulo, gridBagConstraints);
 
         boton_IniciarSesion.setBackground(new java.awt.Color(0, 51, 204));
+        boton_IniciarSesion.setAlignmentX(0.5F);
         boton_IniciarSesion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         boton_IniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boton_IniciarSesionActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 57;
+        gridBagConstraints.ipady = 26;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 112, 119, 0);
+        getContentPane().add(boton_IniciarSesion, gridBagConstraints);
 
         boton_CrearCuenta.setBackground(new java.awt.Color(0, 51, 204));
+        boton_CrearCuenta.setAlignmentX(0.5F);
         boton_CrearCuenta.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         boton_CrearCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boton_CrearCuentaActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.ipadx = 70;
+        gridBagConstraints.ipady = 26;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(12, 121, 119, 0);
+        getContentPane().add(boton_CrearCuenta, gridBagConstraints);
 
         texto_IniciarSesion.setBackground(new java.awt.Color(51, 153, 255));
         texto_IniciarSesion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         texto_IniciarSesion.setText("Iniciar Sesión");
+        texto_IniciarSesion.setAlignmentX(0.5F);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(78, 93, 0, 0);
+        getContentPane().add(texto_IniciarSesion, gridBagConstraints);
 
         texto_CrearUsuario.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         texto_CrearUsuario.setText("Crear Usuario");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(titulo)
-                .addContainerGap(54, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(texto_IniciarSesion))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(boton_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(texto_CrearUsuario)
-                        .addGap(102, 102, 102))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(boton_CrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(111, 111, 111))))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(titulo)
-                .addGap(78, 78, 78)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(texto_IniciarSesion)
-                    .addComponent(texto_CrearUsuario))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(boton_CrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(boton_IniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(119, Short.MAX_VALUE))
-        );
+        texto_CrearUsuario.setAlignmentX(0.5F);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(78, 98, 0, 0);
+        getContentPane().add(texto_CrearUsuario, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void boton_CrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_CrearCuentaActionPerformed
         // TODO add your handling code here:
-        CrearUsuario crearUsuario = new CrearUsuario();
+        CrearUsuario crearUsuario = new CrearUsuario(this);
         crearUsuario.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_boton_CrearCuentaActionPerformed
 
     private void boton_IniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_IniciarSesionActionPerformed
         // TODO add your handling code here:
-        InicioSesion iniciar_sesion = new InicioSesion();
+        InicioSesion iniciar_sesion = new InicioSesion(this);
         iniciar_sesion.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_boton_IniciarSesionActionPerformed

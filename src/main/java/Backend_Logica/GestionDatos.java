@@ -36,5 +36,13 @@ public class GestionDatos implements Serializable{
     public void setListaUsuarios(ArrayList listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
+    
+    public void agregarUsuario(Cliente usuario){
+        if (!listaUsuarios.contains(usuario)){
+            listaUsuarios.add(usuario);
+        } else {
+            System.out.println("El usuario ya ha sido registrado anteriormente. ");
+        }
+    }
 
 }

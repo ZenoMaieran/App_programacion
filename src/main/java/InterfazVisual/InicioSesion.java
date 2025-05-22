@@ -4,17 +4,27 @@
  */
 package InterfazVisual;
 
+import javax.swing.JFrame;
+
 /**
  *
  * @author anton
  */
 public class InicioSesion extends javax.swing.JFrame {
 
+    private JFrame ventanaBase;
+    
     /**
      * Creates new form InicioSesion
      */
-    public InicioSesion() {
+    public InicioSesion(JFrame base) {
+        this.setLocationRelativeTo(null);
+        this.ventanaBase = base;
         initComponents();
+    }
+
+    private InicioSesion() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -38,14 +48,22 @@ public class InicioSesion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Iniciar Sesión");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jlabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jlabel1.setText("Introduce tu email: ");
+        jlabel1.setAlignmentX(0.5F);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Introduce tu contraseña:");
+        jLabel1.setAlignmentX(0.5F);
 
         jButton1.setBackground(new java.awt.Color(51, 51, 255));
+        jButton1.setAlignmentX(0.5F);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -54,6 +72,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Pulsa aqui:");
+        jLabel2.setAlignmentX(0.5F);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,6 +131,11 @@ public class InicioSesion extends javax.swing.JFrame {
             this.setVisible(false);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        ventanaBase.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
