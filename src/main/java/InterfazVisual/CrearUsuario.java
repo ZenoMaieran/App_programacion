@@ -7,20 +7,22 @@ package InterfazVisual;
 import Backend_Logica.Persona;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import Backend_Logica.GestionDatos;
 
 /**
  *
  * @author anton
  */
 public class CrearUsuario extends javax.swing.JFrame {
-
+    private GestionDatos gestor;
     private JFrame ventanaBase;
     
     /**
      * Creates new form CrearUsuario
      */
-    public CrearUsuario(JFrame base) {
+    public CrearUsuario(JFrame base, GestionDatos gestor) {
         this.setLocationRelativeTo(null);
+        this.gestor = gestor;
         this.ventanaBase = base;
         initComponents();
     }
@@ -143,12 +145,13 @@ public class CrearUsuario extends javax.swing.JFrame {
             if (!contraseña.equals(validacion)) {
                 throw new IllegalArgumentException("Las contraseñas no coinciden");
             }
-            Persona nuevoCliente = new Persona(nombre, correo, contraseña);
+            Persona nuevoUsuario = new Persona(nombre, correo, contraseña);
+            gestor.agregarUsuario(nuevoUsuario);
             JOptionPane.showMessageDialog(null, "Cuenta creada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al crear cuenta", JOptionPane.ERROR_MESSAGE);
         }
-        PaginaBase base = new PaginaBase();
+        PaginaBase base = new PaginaBase(gestor);
         this.setVisible(false);
         base.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed

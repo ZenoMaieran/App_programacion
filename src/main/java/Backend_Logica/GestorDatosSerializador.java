@@ -23,7 +23,7 @@ public class GestorDatosSerializador {
     public static GestionDatos cargar() { 
         GestionDatos gestor = new GestionDatos();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
-            ArrayList<Cliente> lista = (ArrayList<Cliente>) ois.readObject();
+            ArrayList<Persona> lista = (ArrayList<Persona>) ois.readObject();
             gestor.setListaUsuarios(lista);
             System.out.println("Usuarios cargados.");
          } catch (Exception e){

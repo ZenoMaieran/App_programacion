@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class GestionDatos implements Serializable{
 
     public GestionDatos() {
-        ArrayList<Cliente> listaUsuarios = new ArrayList<>();
+        this.listaUsuarios = new ArrayList<>();
     }
     
     private ArrayList listaUsuarios;
@@ -37,7 +37,7 @@ public class GestionDatos implements Serializable{
         this.listaUsuarios = listaUsuarios;
     }
     
-    public void agregarUsuario(Cliente usuario){
+    public void agregarUsuario(Persona usuario){
         if (!listaUsuarios.contains(usuario)){
             listaUsuarios.add(usuario);
         } else {

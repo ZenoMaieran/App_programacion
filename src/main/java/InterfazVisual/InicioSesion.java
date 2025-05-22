@@ -5,20 +5,21 @@
 package InterfazVisual;
 
 import javax.swing.JFrame;
-
+import Backend_Logica.GestionDatos;
 /**
  *
  * @author anton
  */
 public class InicioSesion extends javax.swing.JFrame {
-
+    private GestionDatos gestor;
     private JFrame ventanaBase;
     
     /**
      * Creates new form InicioSesion
      */
-    public InicioSesion(JFrame base) {
+    public InicioSesion(JFrame base, GestionDatos gestor) {
         this.setLocationRelativeTo(null);
+        this.gestor = gestor;
         this.ventanaBase = base;
         initComponents();
     }
@@ -126,7 +127,7 @@ public class InicioSesion extends javax.swing.JFrame {
             admin.setVisible(true);
             this.setVisible(false);
         } else {
-            PaginaBase cliente = new PaginaBase();
+            PaginaBase cliente = new PaginaBase(gestor);
             cliente.setVisible(true);
             this.setVisible(false);
         }

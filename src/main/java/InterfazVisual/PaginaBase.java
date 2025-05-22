@@ -16,10 +16,15 @@ public class PaginaBase extends javax.swing.JFrame {
     /**
      * Creates new form PaginaBase
      */
-    public PaginaBase() {
+    public PaginaBase(GestionDatos gestor) {
         this.setLocationRelativeTo(null);
+        this.gestor = gestor;
         initComponents();
         
+    }
+
+    private PaginaBase() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -51,6 +56,11 @@ public class PaginaBase extends javax.swing.JFrame {
         jMenu2.setText("jMenu2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Buscar un evento:");
@@ -157,6 +167,11 @@ public class PaginaBase extends javax.swing.JFrame {
         eventos.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_menuEventosActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        GestorDatosSerializador.guardar(gestor);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
