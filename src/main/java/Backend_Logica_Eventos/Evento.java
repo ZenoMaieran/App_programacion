@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @author Antonio Zeno Maieran
  */
 public class Evento implements Serializable {
-
+    private static final long serialVersionUID = 1L; // Para serialización segura
     public Evento(String titulo, String tipo, Direccion direccion, LocalDateTime fecha, double precio, int calificacion) {
         this.titulo = titulo;
         this.tipo = tipo;
