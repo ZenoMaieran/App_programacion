@@ -5,13 +5,14 @@
 package Backend_Logica_Eventos;
 
 import Backend_Logica.Direccion;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author Antonio Zeno Maieran
  */
-public class Evento {
+public class Evento implements Serializable {
 
     public Evento(String titulo, String tipo, Direccion direccion, LocalDateTime fecha, double precio, int calificacion) {
         this.titulo = titulo;

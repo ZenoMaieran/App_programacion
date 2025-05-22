@@ -37,7 +37,8 @@ public class PaginaBase extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         menuEventos = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
+        menuReservas = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
@@ -75,8 +76,12 @@ public class PaginaBase extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu6.setText("Reservas");
-        jMenuBar1.add(jMenu6);
+        menuReservas.setText("Reservas");
+
+        jMenuItem2.setText("Ir a reservas");
+        menuReservas.add(jMenuItem2);
+
+        jMenuBar1.add(menuReservas);
 
         jMenu7.setText("Cerrar Sesion");
         jMenuBar1.add(jMenu7);
@@ -185,10 +190,11 @@ public class PaginaBase extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem menuEventos;
+    private javax.swing.JMenu menuReservas;
     // End of variables declaration//GEN-END:variables
 }

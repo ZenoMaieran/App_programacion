@@ -3,12 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Backend_Logica;
+import java.io.Serializable;
 
 /**
  *
  * @author Antonio Zeno Maieran
  */
-public class Persona {
+public class Persona implements Serializable {
 
     public Persona(String nombre, String correo, String clave) {
         setNombre(nombre);

@@ -3,12 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Backend_Logica;
+import java.io.Serializable;
 
 /**
  *
  * @author Antonio Zeno Maieran
  */
-public class Cliente extends Persona {
+public class Cliente extends Persona implements Serializable {
 
     public Cliente(Direccion direccion, TarjetaCredito tarjetaCredito, String telefono, boolean vip, String nombre, String correo, String clave) {
         super(nombre, correo, clave);

@@ -3,12 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Backend_Logica;
+import java.io.Serializable;
 
 /**
  *
  * @author Antonio Zeno Maieran
  */
-public class Direccion {
+public class Direccion implements Serializable{
 
     public Direccion(String calle, int numero, String ciudad, int codigoPostal) {
         this.calle = calle;

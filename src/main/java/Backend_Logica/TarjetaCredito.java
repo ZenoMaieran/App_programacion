@@ -3,14 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Backend_Logica;
-
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author Antonio Zeno Maieran
  */
-public class TarjetaCredito {
+public class TarjetaCredito implements Serializable {
 
     public TarjetaCredito(String nombreTitular, String numero, LocalDate fechaCaducidad) {
         this.nombreTitular = nombreTitular;
