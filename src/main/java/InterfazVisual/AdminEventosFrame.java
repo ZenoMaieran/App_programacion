@@ -24,28 +24,47 @@ public class AdminEventosFrame extends javax.swing.JFrame {
      */
     private ArrayList<Evento> eventos;
     private DefaultTableModel modelo; // Atributo de clase
-    public AdminEventosFrame() {
-    initComponents();
-
-    modelo = new DefaultTableModel();
-    modelo.addColumn("Título");
-    modelo.addColumn("Tipo");
-    modelo.addColumn("Ciudad");
-    modelo.addColumn("Fecha");
-    modelo.addColumn("Precio");
     
-    eventos = GestorArchivosEventos.cargarEventos();
+    public AdminEventosFrame() {
+        initComponents();
 
+        modelo = new DefaultTableModel();
+        modelo.addColumn("Título");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Ciudad");
+        modelo.addColumn("Fecha");
+        modelo.addColumn("Precio");
+
+        eventos = GestorArchivosEventos.cargarEventos(); // 🔁 Primero carga los eventos
+
+        actualizarComboTipos(); // ✅ Ahora sí puedes usar la lista
+
+        for (Evento e : eventos) {
+            modelo.addRow(new Object[]{
+                e.getTitulo(),
+                e.getTipo(),
+                e.getDireccion().getCiudad(),
+                e.getFecha().toString(),
+                e.getPrecio()
+            });
+        }
+
+        tablaEventos.setModel(modelo);
+    }
+
+    
+    private void actualizarComboTipos() {
+    Tipo.removeAllItems();
+    Tipo.addItem("Todos");
+
+    java.util.Set<String> tiposUnicos = new java.util.HashSet<>();
     for (Evento e : eventos) {
-        modelo.addRow(new Object[]{
-            e.getTitulo(),
-            e.getTipo(),
-            e.getDireccion().getCiudad(),
-            e.getFecha().toString(),
-            e.getPrecio()
-        });
-}
-    tablaEventos.setModel(modelo);
+        tiposUnicos.add(e.getTipo());
+    }
+
+    for (String tipo : tiposUnicos) {
+        Tipo.addItem(tipo);
+    }
 }
 
     /**
@@ -65,10 +84,11 @@ public class AdminEventosFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        Ciudad = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         Tipo = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        Buscar = new javax.swing.JButton();
+        limpiarFiltros = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaEventos = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
@@ -99,13 +119,13 @@ public class AdminEventosFrame extends javax.swing.JFrame {
         jLabel1.setText("Filtrar por ciudad: ");
         jPanel2.add(jLabel1);
 
-        jTextField1.setText("Ciudad");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        Ciudad.setText("Ciudad");
+        Ciudad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                CiudadActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField1);
+        jPanel2.add(Ciudad);
 
         jLabel2.setText("Tipo: ");
         jPanel2.add(jLabel2);
@@ -118,8 +138,21 @@ public class AdminEventosFrame extends javax.swing.JFrame {
         });
         jPanel2.add(Tipo);
 
-        jButton1.setText("Buscar");
-        jPanel2.add(jButton1);
+        Buscar.setText("Buscar");
+        Buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BuscarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(Buscar);
+
+        limpiarFiltros.setText("Limpiar Filtros");
+        limpiarFiltros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                limpiarFiltrosActionPerformed(evt);
+            }
+        });
+        jPanel2.add(limpiarFiltros);
 
         tablaEventos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -216,6 +249,7 @@ public class AdminEventosFrame extends javax.swing.JFrame {
                 GestorArchivosEventos.guardarEventos(eventos);
 
                 JOptionPane.showMessageDialog(this, "Evento eliminado correctamente.");
+                actualizarComboTipos();
             }
         } else {                                           // Nada seleccionado
             JOptionPane.showMessageDialog(this, "Selecciona un evento para eliminar.");
@@ -227,7 +261,12 @@ public class AdminEventosFrame extends javax.swing.JFrame {
         if (filaSeleccionada >= 0) {
             Evento eventoSeleccionado = eventos.get(filaSeleccionada);
             CrearEventoFrame editar = new CrearEventoFrame(modelo, eventos, eventoSeleccionado, filaSeleccionada);
-            editar.setVisible(true);
+            editar.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                actualizarComboTipos();
+            }
+        });
+        editar.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Selecciona un evento para editar.");
         }
@@ -235,17 +274,65 @@ public class AdminEventosFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CrearEventoFrame crear = new CrearEventoFrame(modelo, eventos);
+        crear.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                actualizarComboTipos();
+            }
+        });
         crear.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void CiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CiudadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_CiudadActionPerformed
 
     private void TipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TipoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TipoActionPerformed
 
+    private void BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarActionPerformed
+        String ciudadFiltro = Ciudad.getText().trim().toLowerCase();
+        String tipoFiltro = Tipo.getSelectedItem().toString();
+
+        // Limpiar el modelo actual
+        modelo.setRowCount(0);
+
+        for (Evento e : eventos) {
+            boolean coincideCiudad = ciudadFiltro.isEmpty() || e.getDireccion().getCiudad().toLowerCase().contains(ciudadFiltro);
+            boolean coincideTipo = tipoFiltro.equals("Todos") || e.getTipo().equals(tipoFiltro);
+
+            if (coincideCiudad && coincideTipo) {
+                modelo.addRow(new Object[]{
+                    e.getTitulo(),
+                    e.getTipo(),
+                    e.getDireccion().getCiudad(),
+                    e.getFecha().toString(),
+                    e.getPrecio()
+                });
+            }
+        }
+
+        if (modelo.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "No se encontraron eventos con esos filtros.");
+        }
+    }//GEN-LAST:event_BuscarActionPerformed
+
+    private void limpiarFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarFiltrosActionPerformed
+        Ciudad.setText("");                  // Borra el campo de texto de ciudad
+        Tipo.setSelectedIndex(0);           // Selecciona "Todos" en el combo
+
+        modelo.setRowCount(0);              // Borra todas las filas de la tabla
+
+        for (Evento e : eventos) {          // Vuelve a añadir todos los eventos
+            modelo.addRow(new Object[]{
+                e.getTitulo(),
+                e.getTipo(),
+                e.getDireccion().getCiudad(),
+                e.getFecha().toString(),
+                e.getPrecio()
+            });
+        }
+    }//GEN-LAST:event_limpiarFiltrosActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -281,8 +368,9 @@ public class AdminEventosFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Buscar;
+    private javax.swing.JTextField Ciudad;
     private javax.swing.JComboBox<String> Tipo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -297,7 +385,7 @@ public class AdminEventosFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton limpiarFiltros;
     private javax.swing.JTable tablaEventos;
     // End of variables declaration//GEN-END:variables
 }
