@@ -34,6 +34,7 @@ public class AdminEventosFrame extends javax.swing.JFrame {
         modelo.addColumn("Fecha");
         modelo.addColumn("Precio");
         modelo.addColumn("Máx. entradas");
+        modelo.addColumn("Disponibles");
 
         eventos = GestorArchivosEventos.cargarEventos(); // Primero carga los eventos
 
@@ -47,7 +48,8 @@ public class AdminEventosFrame extends javax.swing.JFrame {
                 e.getDireccion().getCiudad(),
                 e.getFecha().toString(),
                 e.getPrecio(),
-                e.getMaxEntradas()
+                e.getMaxEntradas(),
+                e.getEntradasDisponibles()
             });
         }
 
