@@ -88,6 +88,7 @@ public CrearEventoFrame(DefaultTableModel modelo, ArrayList<Evento> listaEventos
         String fechaHora = txtFechaHora.getText(); // formato yyyy-MM-dd HH:mm
         double precio = Double.parseDouble(txtPrecio.getText());
         int calificacion = Integer.parseInt(comboCalificacion.getSelectedItem().toString());
+        
 
         Evento nuevo = new Evento(
             titulo,

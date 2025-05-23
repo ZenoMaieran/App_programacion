@@ -83,7 +83,7 @@ public class PanelDatosEventos extends javax.swing.JPanel {
         txtFecha.setText(e.getFecha().toString());
         txtPrecio.setText(String.valueOf(e.getPrecio()));
         txtCalificacion.setText(String.valueOf(e.getCalificacion()));
-        txtTickets.setText(String.valueOf(e.getTickets()));
+        //txtTickets.setText(String.valueOf(e.getTickets()));
 }
     /**
      * This method is called from within the constructor to initialize the form.

@@ -54,6 +54,7 @@ public class Eventos extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         siguiente = new javax.swing.JButton();
         anterior = new javax.swing.JButton();
+        panelDatosEventos = new InterfazVisual.PanelDatosEventos();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -108,12 +109,15 @@ public class Eventos extends javax.swing.JFrame {
                                 .addGap(536, 536, 536)
                                 .addComponent(jLabel2))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(73, 73, 73)
+                        .addGap(58, 58, 58)
+                        .addComponent(panelDatosEventos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
                         .addComponent(anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)
+                        .addGap(106, 106, 106)
                         .addComponent(siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
+                        .addGap(175, 175, 175)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(232, Short.MAX_VALUE))
         );
@@ -124,15 +128,17 @@ public class Eventos extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addGap(462, 462, 462)
+                .addGap(20, 20, 20)
+                .addComponent(panelDatosEventos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(anterior))
-                .addGap(34, 34, 34)
+                    .addComponent(anterior)
+                    .addComponent(siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
                 .addComponent(jButton2)
-                .addGap(46, 46, 46)
+                .addGap(377, 377, 377)
                 .addComponent(jButton1)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -140,6 +146,9 @@ public class Eventos extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        IntroducirDatosClientes cliente = new IntroducirDatosClientes();
+        this.setVisible(false);
+        cliente.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteActionPerformed
@@ -201,6 +210,7 @@ public class Eventos extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private InterfazVisual.PanelDatosEventos panelDatosEventos;
     private InterfazVisual.PanelDatosEventos panelDatosEventos1;
     private javax.swing.JButton siguiente;
     // End of variables declaration//GEN-END:variables
