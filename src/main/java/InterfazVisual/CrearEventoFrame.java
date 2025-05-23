@@ -15,6 +15,9 @@ public class CrearEventoFrame extends JFrame {
     private JButton btnGuardar;
     private DefaultTableModel modelo;
     private ArrayList<Evento> listaEventos;
+    private Evento eventoEditar = null;
+    private int indexEditar = -1;
+
 
 public CrearEventoFrame(DefaultTableModel modelo, ArrayList<Evento> listaEventos) {
     this.modelo = modelo; // Guarda el modelo en el atributo de clase
@@ -24,6 +27,28 @@ public CrearEventoFrame(DefaultTableModel modelo, ArrayList<Evento> listaEventos
     setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     initComponents();
+}
+
+public CrearEventoFrame(DefaultTableModel modelo, ArrayList<Evento> listaEventos, Evento eventoEditar, int indexEditar) {
+    this(modelo, listaEventos); // llama al constructor existente
+    this.eventoEditar = eventoEditar;
+    this.indexEditar = indexEditar;
+    if (eventoEditar != null) {
+        rellenarCamposConEvento();
+    }
+}
+
+
+private void rellenarCamposConEvento() {
+    txtTitulo.setText(eventoEditar.getTitulo());
+    comboTipo.setSelectedItem(eventoEditar.getTipo());
+    txtCalle.setText(eventoEditar.getDireccion().getCalle());
+    txtNumero.setText(String.valueOf(eventoEditar.getDireccion().getNumero()));
+    txtCiudad.setText(eventoEditar.getDireccion().getCiudad());
+    txtCodigoPostal.setText(String.valueOf(eventoEditar.getDireccion().getCodigoPostal()));
+    txtFechaHora.setText(eventoEditar.getFecha().toString().replace("T", " "));
+    txtPrecio.setText(String.valueOf(eventoEditar.getPrecio()));
+    comboCalificacion.setSelectedItem(String.valueOf(eventoEditar.getCalificacion()));
 }
 
 
@@ -99,15 +124,25 @@ public CrearEventoFrame(DefaultTableModel modelo, ArrayList<Evento> listaEventos
             calificacion
         );
 
-        listaEventos.add(nuevo);
-
-        modelo.addRow(new Object[]{
-            titulo,
-            tipo,
-            ciudad,
-            fechaHora,
-            precio
-        });
+        if (eventoEditar != null && indexEditar >= 0) {
+            // Modo edición
+            listaEventos.set(indexEditar, nuevo);
+            modelo.setValueAt(titulo, indexEditar, 0);
+            modelo.setValueAt(tipo, indexEditar, 1);
+            modelo.setValueAt(ciudad, indexEditar, 2);
+            modelo.setValueAt(fechaHora, indexEditar, 3);
+            modelo.setValueAt(precio, indexEditar, 4);
+        } else {
+            // Modo creación
+            listaEventos.add(nuevo);
+            modelo.addRow(new Object[]{
+                titulo,
+                tipo,
+                ciudad,
+                fechaHora,
+                precio
+            });
+        }
 
         // 💾 Guardar en archivo
         Backend_Logica_Eventos.GestorArchivosEventos.guardarEventos(listaEventos);
