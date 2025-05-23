@@ -14,13 +14,14 @@ import java.time.LocalDateTime;
  */
 public class Evento implements Serializable {
     private static final long serialVersionUID = 1L; // Para serialización segura
-    public Evento(String titulo, String tipo, Direccion direccion, LocalDateTime fecha, double precio, int calificacion) {
+    public Evento(String titulo, String tipo, Direccion direccion, LocalDateTime fecha, double precio, int calificacion, int tickets) {
         this.titulo = titulo;
         this.tipo = tipo;
         this.direccion = direccion;
         this.fecha = fecha;
         this.precio = precio;
         this.calificacion = calificacion;
+        this.tickets = tickets;
     }
     
     private String titulo;
@@ -29,6 +30,26 @@ public class Evento implements Serializable {
     private LocalDateTime fecha;
     private double precio;
     private int calificacion;
+    private int tickets;
+
+    /**
+     * Get the value of tickets
+     *
+     * @return the value of tickets
+     */
+    public int getTickets() {
+        return tickets;
+    }
+
+    /**
+     * Set the value of tickets
+     *
+     * @param tickets new value of tickets
+     */
+    public void setTickets(int tickets) {
+        this.tickets = tickets;
+    }
+
 
     /**
      * Get the value of calificacion

@@ -6,6 +6,10 @@ package InterfazVisual;
 
 import javax.swing.JFrame;
 import Backend_Logica.GestionDatos;
+import Backend_Logica.Persona;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
 /**
  *
  * @author anton
@@ -123,13 +127,26 @@ public class InicioSesion extends javax.swing.JFrame {
         String email = emailT.getText();
         String contraseña = contraseñaT.getText();
         if (email.equals("admin@javaevents.com") && contraseña.equals("admin")){
-            PaginaAdmin admin = new PaginaAdmin();
-            admin.setVisible(true);
-            this.setVisible(false);
-        } else {
+//           PaginaAdmin admin = new PaginaAdmin();
+//            admin.setVisible(true);
+//            this.setVisible(false);
+        }
+        ArrayList<Persona> auxiliar = gestor.getListaUsuarios();
+        Iterator<Persona> iterator = auxiliar.iterator();
+        boolean existe = false;
+        while (!existe && iterator.hasNext()){
+            Persona p = iterator.next();
+            if (p.getCorreo().equals(email) && p.getClave().equals(contraseña)){
+                existe = true;
+            }
+        }
+        if (existe){
+            JOptionPane.showMessageDialog(null, "Has iniciado sesión correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             PaginaBase cliente = new PaginaBase(gestor);
             cliente.setVisible(true);
             this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this,"Error al iniciar sesión, correo o contraseña incorrecta","ERROR",JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -4,6 +4,7 @@
  */
 package InterfazVisual;
 
+import Backend_Logica_Eventos.Evento;
 import javax.swing.JTextField;
 
 /**
@@ -20,55 +21,70 @@ public class PanelDatosEventos extends javax.swing.JPanel {
     }
     //Metodos Get y Set
 
+    public JTextField getTxtTickets() {
+        return txtTickets;
+    }
+
+    public void setTxtTickets(JTextField txtTickets) {
+        this.txtTickets = txtTickets;
+    }
+    
     public JTextField getCalificacion() {
-        return calificacion;
+        return txtCalificacion;
     }
 
     public void setCalificacion(JTextField calificacion) {
-        this.calificacion = calificacion;
+        this.txtCalificacion = calificacion;
     }
 
     public JTextField getDireccion() {
-        return direccion;
+        return txtDireccion;
     }
 
     public void setDireccion(JTextField direccion) {
-        this.direccion = direccion;
+        this.txtDireccion = direccion;
     }
 
     public JTextField getFecha() {
-        return fecha;
+        return txtFecha;
     }
 
     public void setFecha(JTextField fecha) {
-        this.fecha = fecha;
+        this.txtFecha = fecha;
     }
 
     public JTextField getPrecio() {
-        return precio;
+        return txtPrecio;
     }
 
     public void setPrecio(JTextField precio) {
-        this.precio = precio;
+        this.txtPrecio = precio;
     }
 
     public JTextField getTipo() {
-        return tipo;
+        return txtTipo;
     }
 
     public void setTipo(JTextField tipo) {
-        this.tipo = tipo;
+        this.txtTipo = tipo;
     }
 
     public JTextField getTitulo() {
-        return titulo;
+        return txtTitulo;
     }
 
     public void setTitulo(JTextField titulo) {
-        this.titulo = titulo;
+        this.txtTitulo = titulo;
     }
-    
-
+        public void mostrarEvento(Evento e) {
+        txtTitulo.setText(e.getTitulo());
+        txtTipo.setText(e.getTipo());
+        txtDireccion.setText(e.getDireccion().toString());
+        txtFecha.setText(e.getFecha().toString());
+        txtPrecio.setText(String.valueOf(e.getPrecio()));
+        txtCalificacion.setText(String.valueOf(e.getCalificacion()));
+        txtTickets.setText(String.valueOf(e.getTickets()));
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,12 +100,14 @@ public class PanelDatosEventos extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        titulo = new javax.swing.JTextField();
-        tipo = new javax.swing.JTextField();
-        direccion = new javax.swing.JTextField();
-        fecha = new javax.swing.JTextField();
-        precio = new javax.swing.JTextField();
-        calificacion = new javax.swing.JTextField();
+        txtTitulo = new javax.swing.JTextField();
+        txtTipo = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        txtFecha = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
+        txtCalificacion = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtTickets = new javax.swing.JTextField();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Titulo:");
@@ -109,17 +127,20 @@ public class PanelDatosEventos extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Calificación:");
 
-        titulo.setEditable(false);
+        txtTitulo.setEditable(false);
 
-        tipo.setEditable(false);
+        txtTipo.setEditable(false);
 
-        direccion.setEditable(false);
+        txtDireccion.setEditable(false);
 
-        fecha.setEditable(false);
+        txtFecha.setEditable(false);
 
-        precio.setEditable(false);
+        txtPrecio.setEditable(false);
 
-        calificacion.setEditable(false);
+        txtCalificacion.setEditable(false);
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setText("Tickets Disponibles:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -133,15 +154,17 @@ public class PanelDatosEventos extends javax.swing.JPanel {
                     .addComponent(jLabel5)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2))
-                .addGap(87, 87, 87)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel7))
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(titulo, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tipo, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(direccion, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(calificacion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(precio)
-                    .addComponent(fecha))
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtTipo, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCalificacion, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                    .addComponent(txtPrecio)
+                    .addComponent(txtFecha)
+                    .addComponent(txtTickets))
                 .addGap(51, 51, 51))
         );
         layout.setVerticalGroup(
@@ -150,44 +173,50 @@ public class PanelDatosEventos extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(titulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(direccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(precio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(calificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(txtCalificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtTickets, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField calificacion;
-    private javax.swing.JTextField direccion;
-    private javax.swing.JTextField fecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField precio;
-    private javax.swing.JTextField tipo;
-    private javax.swing.JTextField titulo;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JTextField txtCalificacion;
+    private javax.swing.JTextField txtDireccion;
+    private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtTickets;
+    private javax.swing.JTextField txtTipo;
+    private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }
