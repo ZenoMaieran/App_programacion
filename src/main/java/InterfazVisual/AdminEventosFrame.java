@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 import InterfazVisual.CrearEventoFrame;
 import Backend_Logica_Eventos.GestorArchivosEventos;
+import javax.swing.JOptionPane;
+
 
 
 /**
@@ -195,7 +197,14 @@ public class AdminEventosFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        int filaSeleccionada = tablaEventos.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            Evento eventoSeleccionado = eventos.get(filaSeleccionada);
+            CrearEventoFrame editar = new CrearEventoFrame(modelo, eventos, eventoSeleccionado, filaSeleccionada);
+            editar.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecciona un evento para editar.");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
