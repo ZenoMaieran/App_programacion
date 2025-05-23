@@ -127,26 +127,33 @@ public class InicioSesion extends javax.swing.JFrame {
         String email = emailT.getText();
         String contraseña = contraseñaT.getText();
         if (email.equals("admin@javaevents.com") && contraseña.equals("admin")){
-//           PaginaAdmin admin = new PaginaAdmin();
-//            admin.setVisible(true);
-//            this.setVisible(false);
+            AdminEventosFrame admin = new AdminEventosFrame();
+            this.setVisible(false);
+            admin.setVisible(true);
+            return;
         }
         ArrayList<Persona> auxiliar = gestor.getListaUsuarios();
         Iterator<Persona> iterator = auxiliar.iterator();
         boolean existe = false;
+        boolean comprobarContrasena = false;
         while (!existe && iterator.hasNext()){
             Persona p = iterator.next();
-            if (p.getCorreo().equals(email) && p.getClave().equals(contraseña)){
+            if (p.getCorreo().equals(email)){
                 existe = true;
+                if (p.getClave().equals(contraseña)) comprobarContrasena = true;
+                
             }
         }
-        if (existe){
+        if (existe && comprobarContrasena){
             JOptionPane.showMessageDialog(null, "Has iniciado sesión correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             PaginaBase cliente = new PaginaBase(gestor);
             cliente.setVisible(true);
             this.setVisible(false);
+        } else if (existe && !comprobarContrasena){
+            JOptionPane.showMessageDialog(this,"Error al iniciar sesión, contraseña incorrecta","ERROR",JOptionPane.WARNING_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this,"Error al iniciar sesión, correo o contraseña incorrecta","ERROR",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Error al iniciar sesión, crea una cuenta primero. ","ERROR",JOptionPane.WARNING_MESSAGE);
+
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -13,7 +13,6 @@ import Backend_Logica_Eventos.GestorArchivosEventos;
 import javax.swing.JOptionPane;
 
 
-
 /**
  *
  * @author harou
@@ -34,10 +33,13 @@ public class AdminEventosFrame extends javax.swing.JFrame {
         modelo.addColumn("Ciudad");
         modelo.addColumn("Fecha");
         modelo.addColumn("Precio");
+        modelo.addColumn("Máx. entradas");
+        modelo.addColumn("Disponibles");
 
-        eventos = GestorArchivosEventos.cargarEventos(); // 🔁 Primero carga los eventos
+        eventos = GestorArchivosEventos.cargarEventos(); // Primero carga los eventos
 
-        actualizarComboTipos(); // ✅ Ahora sí puedes usar la lista
+        actualizarComboTipos(); // Ahora sí puedes usar la lista
+
 
         for (Evento e : eventos) {
             modelo.addRow(new Object[]{
@@ -45,7 +47,9 @@ public class AdminEventosFrame extends javax.swing.JFrame {
                 e.getTipo(),
                 e.getDireccion().getCiudad(),
                 e.getFecha().toString(),
-                e.getPrecio()
+                e.getPrecio(),
+                e.getMaxEntradas(),
+                e.getEntradasDisponibles()
             });
         }
 
@@ -81,6 +85,7 @@ public class AdminEventosFrame extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
+        jToolBar1 = new javax.swing.JToolBar();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -114,9 +119,11 @@ public class AdminEventosFrame extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(jEditorPane1);
 
+        jToolBar1.setRollover(true);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Filtrar por ciudad: ");
+        jLabel1.setText("Filtrar por: ");
         jPanel2.add(jLabel1);
 
         Ciudad.setText("Ciudad");
@@ -198,7 +205,7 @@ public class AdminEventosFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 752, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -294,8 +301,7 @@ public class AdminEventosFrame extends javax.swing.JFrame {
         String ciudadFiltro = Ciudad.getText().trim().toLowerCase();
         String tipoFiltro = Tipo.getSelectedItem().toString();
 
-        // Limpiar el modelo actual
-        modelo.setRowCount(0);
+        modelo.setRowCount(0); // limpiar tabla
 
         for (Evento e : eventos) {
             boolean coincideCiudad = ciudadFiltro.isEmpty() || e.getDireccion().getCiudad().toLowerCase().contains(ciudadFiltro);
@@ -385,6 +391,7 @@ public class AdminEventosFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JButton limpiarFiltros;
     private javax.swing.JTable tablaEventos;
     // End of variables declaration//GEN-END:variables

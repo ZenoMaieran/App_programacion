@@ -15,9 +15,30 @@ public class GestionDatos implements Serializable{
 
     public GestionDatos() {
         this.listaUsuarios = new ArrayList<>();
+        this.listaClientes = new ArrayList<>();
     }
     
-    private ArrayList listaUsuarios;
+    private ArrayList listaUsuarios; 
+    private ArrayList listaClientes;
+
+    /**
+     * Get the value of listaClientes
+     *
+     * @return the value of listaClientes
+     */
+    public ArrayList getListaClientes() {
+        return listaClientes;
+    }
+
+    /**
+     * Set the value of listaClientes
+     *
+     * @param listaClientes new value of listaClientes
+     */
+    public void setListaClientes(ArrayList listaClientes) {
+        this.listaClientes = listaClientes;
+    }
+
 
     /**
      * Get the value of listaUsuarios
@@ -42,6 +63,13 @@ public class GestionDatos implements Serializable{
             listaUsuarios.add(usuario);
         } else {
             System.out.println("El usuario ya ha sido registrado anteriormente. ");
+        }
+    }
+    public void agregarCliente(Cliente cliente){
+        if (!listaClientes.contains(cliente)){
+            listaClientes.add(cliente);
+        } else {
+            System.out.println("El cliente ya ha sido registrado anteriormente");
         }
     }
 
