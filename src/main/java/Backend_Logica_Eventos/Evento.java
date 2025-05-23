@@ -14,13 +14,15 @@ import java.time.LocalDateTime;
  */
 public class Evento implements Serializable {
     private static final long serialVersionUID = 1L; // Para serialización segura
-    public Evento(String titulo, String tipo, Direccion direccion, LocalDateTime fecha, double precio, int calificacion) {
+    public Evento(String titulo, String tipo, Direccion direccion, LocalDateTime fecha, double precio, int calificacion, int maxEntradas) {
         this.titulo = titulo;
         this.tipo = tipo;
         this.direccion = direccion;
         this.fecha = fecha;
         this.precio = precio;
         this.calificacion = calificacion;
+        this.maxEntradas = maxEntradas;
+        this.entradasDisponibles = maxEntradas; // Al principio, todas están disponibles
     }
     
     private String titulo;
@@ -29,6 +31,9 @@ public class Evento implements Serializable {
     private LocalDateTime fecha;
     private double precio;
     private int calificacion;
+    private int maxEntradas;
+    private int entradasDisponibles;
+
 
     /**
      * Get the value of calificacion
@@ -141,5 +146,26 @@ public class Evento implements Serializable {
     public void setTitulo(String Titulo) {
         this.titulo = Titulo;
     }
+    public int getMaxEntradas() {
+    return maxEntradas;
+    }
+
+    public void setMaxEntradas(int maxEntradas) {
+        this.maxEntradas = maxEntradas;
+        this.entradasDisponibles = maxEntradas; // Opcional: resetea las disponibles
+    }
+
+    public int getEntradasDisponibles() {
+        return entradasDisponibles;
+    }
+
+    public boolean reducirEntradasDisponibles(int cantidad) {
+        if (cantidad <= entradasDisponibles) {
+            entradasDisponibles -= cantidad;
+            return true;
+        }
+        return false;
+    }
+
 
 }
