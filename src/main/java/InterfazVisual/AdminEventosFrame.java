@@ -193,7 +193,33 @@ public class AdminEventosFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        // Averiguamos qué fila está seleccionada
+        int filaSeleccionada = tablaEventos.getSelectedRow();
+
+        if (filaSeleccionada >= 0) {                       // Hay algo seleccionado
+            // Mensaje de confirmación
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "¿Estás seguro de eliminar el evento seleccionado?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                // 1. Quitarlo de la lista en memoria
+                eventos.remove(filaSeleccionada);
+
+                // 2. Quitar la fila del modelo de la tabla
+                modelo.removeRow(filaSeleccionada);
+
+                // 3. Persistir el cambio en disco
+                GestorArchivosEventos.guardarEventos(eventos);
+
+                JOptionPane.showMessageDialog(this, "Evento eliminado correctamente.");
+            }
+        } else {                                           // Nada seleccionado
+            JOptionPane.showMessageDialog(this, "Selecciona un evento para eliminar.");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
