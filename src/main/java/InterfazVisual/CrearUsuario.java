@@ -14,9 +14,10 @@ import Backend_Logica.GestionDatos;
  * @author anton
  */
 public class CrearUsuario extends javax.swing.JFrame {
+
     private GestionDatos gestor;
     private JFrame ventanaBase;
-    
+
     /**
      * Creates new form CrearUsuario
      */
@@ -147,13 +148,15 @@ public class CrearUsuario extends javax.swing.JFrame {
             }
             Persona nuevoUsuario = new Persona(nombre, correo, contraseña);
             gestor.agregarUsuario(nuevoUsuario);
+            gestor.setUsuarioLogeado(nuevoUsuario);
             JOptionPane.showMessageDialog(null, "Cuenta creada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            PaginaBase base = new PaginaBase(gestor);
+            this.setVisible(false);
+            base.setVisible(true);
         } catch (IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al crear cuenta", JOptionPane.ERROR_MESSAGE);
         }
-        PaginaBase base = new PaginaBase(gestor);
-        this.setVisible(false);
-        base.setVisible(true);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

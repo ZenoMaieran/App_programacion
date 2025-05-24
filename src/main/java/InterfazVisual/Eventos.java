@@ -4,12 +4,19 @@
  */
 package InterfazVisual;
 
+import Backend_Logica.GestionDatos;
 import Backend_Logica_Eventos.Evento;
 import Backend_Logica_Eventos.GestorArchivosEventos;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
 import javax.swing.JOptionPane;
+import Backend_Logica.Direccion;
+import static Backend_Logica.Direccion.parsearDireccion;
+import InterfazVisual.PaginaCompra;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  *
@@ -22,9 +29,11 @@ public class Eventos extends javax.swing.JFrame {
      */
     private ArrayList<Evento> eventos;
     private ListIterator<Evento> iterador;
+    private GestionDatos gestor;
 
-    public Eventos() {
+    public Eventos(GestionDatos gestor) {
         initComponents();
+        this.gestor = gestor;
         this.setLocationRelativeTo(null);
         this.eventos = new ArrayList();
         eventos = GestorArchivosEventos.cargarEventos();
@@ -36,6 +45,10 @@ public class Eventos extends javax.swing.JFrame {
             }
         }
 
+    }
+
+    private Eventos() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -146,9 +159,32 @@ public class Eventos extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        IntroducirDatosClientes cliente = new IntroducirDatosClientes();
-        this.setVisible(false);
-        cliente.setVisible(true);
+        try {
+            String titulo = panelDatosEventos.getTitulo().getText();
+            String tipo = panelDatosEventos.getTipo().getText();
+            String txtDireccion = panelDatosEventos.getDireccion().getText();
+            Direccion direccion = parsearDireccion(txtDireccion);
+            String textoFecha = panelDatosEventos.getFecha().getText();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime fecha = LocalDateTime.parse(textoFecha, formatter);
+            int calificacion = Integer.parseInt(panelDatosEventos.getCalificacion().getText());
+            double precio = Double.parseDouble(panelDatosEventos.getPrecio().getText());
+            int ticketsDisponibles = Integer.parseInt(panelDatosEventos.getTxtTickets().getText());
+
+            Evento evento = new Evento(titulo, tipo, direccion, fecha, precio, calificacion, ticketsDisponibles);
+            gestor.setDatosEventoComprar(evento);
+            System.out.println("Evento guardado bien");
+            PaginaCompra datosCompra = new PaginaCompra(gestor);
+            this.setVisible(false);
+            datosCompra.setVisible(true);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Formato numérico incorrecto en calificación, precio o tickets.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Usa: yyyy-MM-dd HH:mm", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el evento: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteActionPerformed

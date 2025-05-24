@@ -4,10 +4,14 @@
  */
 package InterfazVisual;
 
+import Backend_Logica.Cliente;
 import Backend_Logica.Direccion;
+import Backend_Logica.GestionDatos;
 import Backend_Logica.TarjetaCredito;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,11 +19,20 @@ import java.time.format.DateTimeFormatter;
  */
 public class IntroducirDatosClientes extends javax.swing.JFrame {
 
+    private GestionDatos gestor;
+    private int ticketsAComprar;
+
     /**
      * Creates new form IntroducirDatosClientes
      */
-    public IntroducirDatosClientes() {
+    public IntroducirDatosClientes(GestionDatos gestor, int tickets) {
         initComponents();
+        this.gestor = gestor;
+        this.ticketsAComprar = tickets;
+    }
+
+    private IntroducirDatosClientes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**
@@ -54,6 +67,9 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
         txtFecha = new javax.swing.JFormattedTextField();
         seguirComprando = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        checkVIP = new javax.swing.JCheckBox();
+        jLabel13 = new javax.swing.JLabel();
+        txtDinero = new javax.swing.JTextField();
 
         jTextField1.setText("jTextField1");
 
@@ -111,6 +127,15 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
 
         jLabel12.setText("VIP:");
 
+        checkVIP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkVIPActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel13.setText("Dinero en la cuenta:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,17 +175,21 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel9)
-                                .addComponent(jLabel11)))
-                        .addGap(62, 62, 62)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(checkVIP))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel13))
+                        .addGap(55, 55, 55)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtNumeroTarjeta)
                             .addComponent(txtNombreTitular)
-                            .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE))))
+                            .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                            .addComponent(txtDinero))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -200,17 +229,26 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11))))
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtCodigoPostal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel12)
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(txtCodigoPostal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(txtDinero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(checkVIP)
+                            .addComponent(jLabel12))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(seguirComprando)
                 .addGap(51, 51, 51))
         );
@@ -224,23 +262,54 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
 
     private void seguirComprandoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirComprandoActionPerformed
         // TODO add your handling code here:
-        String calle = txtCalle.getText();
-        int numero = Integer.parseInt(txtNumero.getText());
-        String ciudad = txtCiudad.getText();
-        int codigoPostal = Integer.parseInt(txtCodigoPostal.getText());
-        String nombreTitular = txtNombreTitular.getText();
-        String numeroTarjeta = txtNumeroTarjeta.getText();
-        String textoFecha = txtFecha.getText(); // Por ejemplo: "2025-05-24"
-        
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate fechaCaducidad = LocalDate.parse(textoFecha, formatter);        
-        
-        Direccion direccion = new Direccion(calle, numero, ciudad, codigoPostal);
-        TarjetaCredito tarjeta = new TarjetaCredito(nombreTitular, numeroTarjeta, fechaCaducidad);
-        //Cliente cliente = new Cliente()
-        
-        
+        try {
+            String calle = txtCalle.getText();
+            int numero = Integer.parseInt(txtNumero.getText());
+            String ciudad = txtCiudad.getText();
+            int codigoPostal = Integer.parseInt(txtCodigoPostal.getText());
+            String nombreTitular = txtNombreTitular.getText();
+            String numeroTarjeta = txtNumeroTarjeta.getText();
+            String textoFecha = txtFecha.getText(); // Por ejemplo: "2025-05-24"
+            double dinero = Double.parseDouble(txtDinero.getText());
+            boolean vip = checkVIP.isSelected();
+            String telefono = txtTelefono.getText();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/YY");
+            LocalDate fechaCaducidad = LocalDate.parse(textoFecha, formatter);
+
+            Direccion direccion = new Direccion(calle, numero, ciudad, codigoPostal);
+            TarjetaCredito tarjeta = new TarjetaCredito(nombreTitular, numeroTarjeta, fechaCaducidad, dinero);
+            Cliente cliente = new Cliente(direccion, tarjeta, telefono, vip, gestor.getUsuarioLogeado().getNombre(), gestor.getUsuarioLogeado().getCorreo(), gestor.getUsuarioLogeado().getClave());
+            gestor.agregarCliente(cliente);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Introduce solo números válidos en los campos numéricos.", "Error de formato numérico", JOptionPane.ERROR_MESSAGE);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(this, "La fecha debe tener el formato d/M/YY.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
+        } catch (NullPointerException e) {
+            JOptionPane.showMessageDialog(this, "Ha ocurrido un error con los datos del usuario logeado. Por favor, reinicia sesión.", "Error de sesión", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+            
+        int opcion = JOptionPane.showConfirmDialog(
+                null,
+                "¿Estás seguro de realizar el pago?",
+                "Confirmación de pago",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            System.out.println("El usuario eligió SÍ.");
+        } else if (opcion == JOptionPane.NO_OPTION) {
+            System.out.println("El usuario eligió NO.");
+        }
+
+
     }//GEN-LAST:event_seguirComprandoActionPerformed
+
+    private void checkVIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkVIPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_checkVIPActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,10 +347,12 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JCheckBox checkVIP;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -296,6 +367,7 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txtCalle;
     private javax.swing.JFormattedTextField txtCiudad;
     private javax.swing.JFormattedTextField txtCodigoPostal;
+    private javax.swing.JTextField txtDinero;
     private javax.swing.JFormattedTextField txtFecha;
     private javax.swing.JFormattedTextField txtNombreTitular;
     private javax.swing.JFormattedTextField txtNumero;

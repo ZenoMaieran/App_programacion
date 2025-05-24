@@ -140,7 +140,10 @@ public class InicioSesion extends javax.swing.JFrame {
             Persona p = iterator.next();
             if (p.getCorreo().equals(email)){
                 existe = true;
-                if (p.getClave().equals(contraseña)) comprobarContrasena = true;
+                if (p.getClave().equals(contraseña)) {
+                    comprobarContrasena = true;
+                    gestor.setUsuarioLogeado(p);
+                }
                 
             }
         }

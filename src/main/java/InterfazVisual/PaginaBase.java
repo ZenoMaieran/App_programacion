@@ -155,7 +155,7 @@ public class PaginaBase extends javax.swing.JFrame {
 
     private void BusquedaEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BusquedaEventoActionPerformed
         // TODO add your handling code here:
-        Eventos eventos = new Eventos();
+        Eventos eventos = new Eventos(gestor);
         eventos.setVisible(true);
         this.setVisible(false);
         
@@ -163,7 +163,7 @@ public class PaginaBase extends javax.swing.JFrame {
 
     private void menuEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEventosActionPerformed
         // TODO add your handling code here:
-        Eventos eventos = new Eventos();
+        Eventos eventos = new Eventos(gestor);
         eventos.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_menuEventosActionPerformed

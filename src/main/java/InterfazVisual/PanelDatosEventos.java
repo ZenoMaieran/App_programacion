@@ -4,6 +4,7 @@
  */
 package InterfazVisual;
 
+import Backend_Logica.Direccion;
 import Backend_Logica_Eventos.Evento;
 import javax.swing.JTextField;
 
@@ -28,7 +29,7 @@ public class PanelDatosEventos extends javax.swing.JPanel {
     public void setTxtTickets(JTextField txtTickets) {
         this.txtTickets = txtTickets;
     }
-    
+
     public JTextField getCalificacion() {
         return txtCalificacion;
     }
@@ -76,15 +77,17 @@ public class PanelDatosEventos extends javax.swing.JPanel {
     public void setTitulo(JTextField titulo) {
         this.txtTitulo = titulo;
     }
-        public void mostrarEvento(Evento e) {
+
+    public void mostrarEvento(Evento e) {
         txtTitulo.setText(e.getTitulo());
         txtTipo.setText(e.getTipo());
         txtDireccion.setText(e.getDireccion().toString());
         txtFecha.setText(e.getFecha().toString());
         txtPrecio.setText(String.valueOf(e.getPrecio()));
         txtCalificacion.setText(String.valueOf(e.getCalificacion()));
-        //txtTickets.setText(String.valueOf(e.getTickets()));
-}
+        txtTickets.setText(String.valueOf(e.getEntradasDisponibles()));
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

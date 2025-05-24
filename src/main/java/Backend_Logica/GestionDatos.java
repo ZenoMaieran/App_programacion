@@ -4,6 +4,7 @@
  */
 package Backend_Logica;
 
+import Backend_Logica_Eventos.Evento;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -20,6 +21,46 @@ public class GestionDatos implements Serializable{
     
     private ArrayList listaUsuarios; 
     private ArrayList listaClientes;
+    private Persona usuarioLogeado;
+    private Evento datosEventoComprar;
+
+    /**
+     * Get the value of datosEventoComprar
+     *
+     * @return the value of datosEventoComprar
+     */
+    public Evento getDatosEventoComprar() {
+        return datosEventoComprar;
+    }
+
+    /**
+     * Set the value of datosEventoComprar
+     *
+     * @param datosEventoComprar new value of datosEventoComprar
+     */
+    public void setDatosEventoComprar(Evento datosEventoComprar) {
+        this.datosEventoComprar = datosEventoComprar;
+    }
+
+
+    /**
+     * Get the value of usuarioLogeado
+     *
+     * @return the value of usuarioLogeado
+     */
+    public Persona getUsuarioLogeado() {
+        return usuarioLogeado;
+    }
+
+    /**
+     * Set the value of usuarioLogeado
+     *
+     * @param usuarioLogeado new value of usuarioLogeado
+     */
+    public void setUsuarioLogeado(Persona usuarioLogeado) {
+        this.usuarioLogeado = usuarioLogeado;
+    }
+
 
     /**
      * Get the value of listaClientes

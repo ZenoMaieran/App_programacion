@@ -12,7 +12,6 @@ import java.io.Serializable;
 public class Persona implements Serializable {
 
     public Persona(String nombre, String correo, String clave) {
-        setNombre(nombre);
         setCorreo(correo);
         setClave(clave);
         this.setNombre(nombre); //this.setXXXX en vez de this.XXXX para usar las mismas validaciones del setter en el constructor. Eso asegura que siempre se revisan los datos, tanto al crear como al modificar.
