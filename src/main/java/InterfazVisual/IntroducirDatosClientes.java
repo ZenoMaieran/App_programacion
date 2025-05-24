@@ -274,13 +274,14 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
             boolean vip = checkVIP.isSelected();
             String telefono = txtTelefono.getText();
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/YY");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yy");
             LocalDate fechaCaducidad = LocalDate.parse(textoFecha, formatter);
 
             Direccion direccion = new Direccion(calle, numero, ciudad, codigoPostal);
             TarjetaCredito tarjeta = new TarjetaCredito(nombreTitular, numeroTarjeta, fechaCaducidad, dinero);
             Cliente cliente = new Cliente(direccion, tarjeta, telefono, vip, gestor.getUsuarioLogeado().getNombre(), gestor.getUsuarioLogeado().getCorreo(), gestor.getUsuarioLogeado().getClave());
             gestor.agregarCliente(cliente);
+            gestor.setClienteLogeado(cliente);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Introduce solo números válidos en los campos numéricos.", "Error de formato numérico", JOptionPane.ERROR_MESSAGE);
         } catch (DateTimeParseException e) {
@@ -290,20 +291,30 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-            
-        int opcion = JOptionPane.showConfirmDialog(
-                null,
-                "¿Estás seguro de realizar el pago?",
-                "Confirmación de pago",
-                JOptionPane.YES_NO_OPTION
-        );
+        if (gestor.getClienteLogeado().getTarjetaCredito().getDinero() >= (ticketsAComprar * gestor.getDatosEventoComprar().getPrecio())) {
+            double auxDineroTarjeta = gestor.getClienteLogeado().getTarjetaCredito().getDinero();
+            double auxDineroPagar = ticketsAComprar * gestor.getDatosEventoComprar().getPrecio();
+            double resultado = auxDineroTarjeta - auxDineroPagar;
+            int opcion = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Estás seguro de realizar el pago?",
+                    "Confirmación de pago",
+                    JOptionPane.YES_NO_OPTION
+            );
 
-        if (opcion == JOptionPane.YES_OPTION) {
-            System.out.println("El usuario eligió SÍ.");
-        } else if (opcion == JOptionPane.NO_OPTION) {
-            System.out.println("El usuario eligió NO.");
+            if (opcion == JOptionPane.YES_OPTION) {
+                gestor.getClienteLogeado().getTarjetaCredito().setDinero(resultado);
+                int entradasActualizadas = gestor.getDatosEventoComprar().getEntradasDisponibles() - this.ticketsAComprar;
+                gestor.getDatosEventoComprar().setMaxEntradas(entradasActualizadas);
+                System.out.println("El usuario eligió SÍ.");
+                System.out.println(gestor.getClienteLogeado().getTarjetaCredito().getDinero());
+                System.out.println(gestor.getDatosEventoComprar().getEntradasDisponibles());
+            } else if (opcion == JOptionPane.NO_OPTION) {
+                System.out.println("El usuario eligió NO.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay suficiente dinero en la tarjeta. ", "Fondos insuficientes.", JOptionPane.ERROR_MESSAGE);
         }
-
 
     }//GEN-LAST:event_seguirComprandoActionPerformed
 

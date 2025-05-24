@@ -23,6 +23,27 @@ public class GestionDatos implements Serializable{
     private ArrayList listaClientes;
     private Persona usuarioLogeado;
     private Evento datosEventoComprar;
+    
+    private Cliente clienteLogeado;
+
+    /**
+     * Get the value of clienteLogeado
+     *
+     * @return the value of clienteLogeado
+     */
+    public Cliente getClienteLogeado() {
+        return clienteLogeado;
+    }
+
+    /**
+     * Set the value of clienteLogeado
+     *
+     * @param clienteLogeado new value of clienteLogeado
+     */
+    public void setClienteLogeado(Cliente clienteLogeado) {
+        this.clienteLogeado = clienteLogeado;
+    }
+
 
     /**
      * Get the value of datosEventoComprar

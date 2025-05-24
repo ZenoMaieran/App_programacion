@@ -17,7 +17,9 @@ import javax.swing.JOptionPane;
  * @author anton
  */
 public class PaginaCompra extends javax.swing.JFrame {
+
     private GestionDatos gestor;
+
     /**
      * Creates new form PaginaCompra
      */
@@ -120,7 +122,16 @@ public class PaginaCompra extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+        try {
+            int tickets = Integer.parseInt(txtTicketsAComprar.getText());
+            IntroducirDatosClientes pagar = new IntroducirDatosClientes(gestor, tickets);
+            this.setVisible(false);
+            pagar.setVisible(true);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Introduce un número válido de tickets.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al continuar con el pago: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
