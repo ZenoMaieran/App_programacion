@@ -3,13 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Backend_Logica;
+
 import java.io.Serializable;
 
 /**
  *
  * @author Antonio Zeno Maieran
  */
-public class Direccion implements Serializable{
+public class Direccion implements Serializable {
 
     public Direccion(String calle, int numero, String ciudad, int codigoPostal) {
         this.calle = calle;
@@ -17,9 +18,9 @@ public class Direccion implements Serializable{
         this.ciudad = ciudad;
         this.codigoPostal = codigoPostal;
     }
-    
+
     private String calle;
-    private int numero; 
+    private int numero;
     private String ciudad;
     private int codigoPostal;
 
@@ -39,12 +40,11 @@ public class Direccion implements Serializable{
      */
     public void setCodigoPostal(int codigoPostal) {
         String aux = String.valueOf(codigoPostal);
-        if (aux.length() != 5){
+        if (aux.length() != 5) {
             throw new IllegalArgumentException("El codigo postal es incorrecto (5 digitos).");
         }
         this.codigoPostal = codigoPostal;
     }
-
 
     /**
      * Get the value of ciudad
@@ -67,7 +67,6 @@ public class Direccion implements Serializable{
         this.ciudad = ciudad;
     }
 
-
     /**
      * Get the value of numero
      *
@@ -83,12 +82,11 @@ public class Direccion implements Serializable{
      * @param numero new value of numero
      */
     public void setNumero(int numero) {
-        if (numero == 0){
+        if (numero == 0) {
             throw new IllegalArgumentException("El numero introducido no es correcto.");
         }
         this.numero = numero;
     }
-
 
     /**
      * Get the value of calle
@@ -111,11 +109,48 @@ public class Direccion implements Serializable{
         this.calle = calle;
     }
 
+    public static Direccion parsearDireccion(String texto) {
+        // Quitar "Direccion{" al principio y "}" al final
+        texto = texto.replace("Direccion{", "").replace("}", "");
+
+        // Separar por comas
+        String[] partes = texto.split(",");
+
+        String calle = "";
+        int numero = 0;
+        String ciudad = "";
+        int codigoPostal = 0;
+
+        for (String parte : partes) {
+            String[] claveValor = parte.trim().split("=");
+
+            if (claveValor.length == 2) {
+                String clave = claveValor[0].trim();
+                String valor = claveValor[1].trim();
+
+                switch (clave) {
+                    case "calle":
+                        calle = valor;
+                        break;
+                    case "numero":
+                        numero = Integer.parseInt(valor);
+                        break;
+                    case "ciudad":
+                        ciudad = valor;
+                        break;
+                    case "codigoPostal":
+                        codigoPostal = Integer.parseInt(valor);
+                        break;
+                }
+            }
+        }
+
+        return new Direccion(calle, numero, ciudad, codigoPostal);
+    }
+
     @Override
     public String toString() {
         return "Direccion{" + "calle=" + calle + ", numero=" + numero + ", ciudad=" + ciudad + ", codigoPostal=" + codigoPostal + '}';
     }
-    
-    
 
 }

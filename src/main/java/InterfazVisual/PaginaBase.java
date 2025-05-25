@@ -126,7 +126,7 @@ public class PaginaBase extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BusquedaEvento, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ConsultarReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(226, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
@@ -155,7 +155,7 @@ public class PaginaBase extends javax.swing.JFrame {
 
     private void BusquedaEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BusquedaEventoActionPerformed
         // TODO add your handling code here:
-        Eventos eventos = new Eventos();
+        Eventos eventos = new Eventos(gestor);
         eventos.setVisible(true);
         this.setVisible(false);
         
@@ -163,7 +163,7 @@ public class PaginaBase extends javax.swing.JFrame {
 
     private void menuEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEventosActionPerformed
         // TODO add your handling code here:
-        Eventos eventos = new Eventos();
+        Eventos eventos = new Eventos(gestor);
         eventos.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_menuEventosActionPerformed

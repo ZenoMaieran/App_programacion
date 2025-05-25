@@ -4,6 +4,7 @@
  */
 package Backend_Logica;
 
+import Backend_Logica_Eventos.Evento;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -15,9 +16,91 @@ public class GestionDatos implements Serializable{
 
     public GestionDatos() {
         this.listaUsuarios = new ArrayList<>();
+        this.listaClientes = new ArrayList<>();
     }
     
-    private ArrayList listaUsuarios;
+    private ArrayList listaUsuarios; 
+    private ArrayList listaClientes;
+    private Persona usuarioLogeado;
+    private Evento datosEventoComprar;
+    
+    private Cliente clienteLogeado;
+
+    /**
+     * Get the value of clienteLogeado
+     *
+     * @return the value of clienteLogeado
+     */
+    public Cliente getClienteLogeado() {
+        return clienteLogeado;
+    }
+
+    /**
+     * Set the value of clienteLogeado
+     *
+     * @param clienteLogeado new value of clienteLogeado
+     */
+    public void setClienteLogeado(Cliente clienteLogeado) {
+        this.clienteLogeado = clienteLogeado;
+    }
+
+
+    /**
+     * Get the value of datosEventoComprar
+     *
+     * @return the value of datosEventoComprar
+     */
+    public Evento getDatosEventoComprar() {
+        return datosEventoComprar;
+    }
+
+    /**
+     * Set the value of datosEventoComprar
+     *
+     * @param datosEventoComprar new value of datosEventoComprar
+     */
+    public void setDatosEventoComprar(Evento datosEventoComprar) {
+        this.datosEventoComprar = datosEventoComprar;
+    }
+
+
+    /**
+     * Get the value of usuarioLogeado
+     *
+     * @return the value of usuarioLogeado
+     */
+    public Persona getUsuarioLogeado() {
+        return usuarioLogeado;
+    }
+
+    /**
+     * Set the value of usuarioLogeado
+     *
+     * @param usuarioLogeado new value of usuarioLogeado
+     */
+    public void setUsuarioLogeado(Persona usuarioLogeado) {
+        this.usuarioLogeado = usuarioLogeado;
+    }
+
+
+    /**
+     * Get the value of listaClientes
+     *
+     * @return the value of listaClientes
+     */
+    public ArrayList getListaClientes() {
+        return listaClientes;
+    }
+
+    /**
+     * Set the value of listaClientes
+     *
+     * @param listaClientes new value of listaClientes
+     */
+    public void setListaClientes(ArrayList listaClientes) {
+        this.listaClientes = listaClientes;
+    }
+
 
     /**
      * Get the value of listaUsuarios
@@ -42,6 +125,13 @@ public class GestionDatos implements Serializable{
             listaUsuarios.add(usuario);
         } else {
             System.out.println("El usuario ya ha sido registrado anteriormente. ");
+        }
+    }
+    public void agregarCliente(Cliente cliente){
+        if (!listaClientes.contains(cliente)){
+            listaClientes.add(cliente);
+        } else {
+            System.out.println("El cliente ya ha sido registrado anteriormente");
         }
     }
 

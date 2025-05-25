@@ -31,5 +31,16 @@ public class GestorDatosSerializador {
          }
         return gestor;
     }
+    public static GestionDatos cargarClientes() { 
+        GestionDatos gestor = new GestionDatos();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO))) {
+            ArrayList<Cliente> lista = (ArrayList<Cliente>) ois.readObject();
+            gestor.setListaUsuarios(lista);
+            System.out.println("Clientes cargados.");
+         } catch (Exception e){
+             System.out.println("No se han cargado los clientes correctamente, se hara una lista vacia.");
+         }
+        return gestor;
+    }
 }
 

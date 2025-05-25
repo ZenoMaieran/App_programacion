@@ -12,15 +12,37 @@ import java.time.LocalDate;
  */
 public class TarjetaCredito implements Serializable {
 
-    public TarjetaCredito(String nombreTitular, String numero, LocalDate fechaCaducidad) {
+    public TarjetaCredito(String nombreTitular, String numero, LocalDate fechaCaducidad, double dinero) {
         this.nombreTitular = nombreTitular;
         this.numero = numero;
         this.fechaCaducidad = fechaCaducidad;
+        this.dinero = dinero;
     }
     
     private String nombreTitular;
     private String numero;   //int a String porque int no soporta un número enorme
     private LocalDate fechaCaducidad;
+    
+    private double dinero;
+
+    /**
+     * Get the value of dinero
+     *
+     * @return the value of dinero
+     */
+    public double getDinero() {
+        return dinero;
+    }
+
+    /**
+     * Set the value of dinero
+     *
+     * @param dinero new value of dinero
+     */
+    public void setDinero(double dinero) {
+        this.dinero = dinero;
+    }
+
 
     /**
      * Get the value of fechaCaducidad
