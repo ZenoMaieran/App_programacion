@@ -10,6 +10,8 @@ import Backend_Logica_Eventos.Evento;
 import Backend_Logica_Clientes.Cliente;
 import Backend_Logica.GestionDatos;
 import Backend_Logica_Eventos.GestorArchivosEventos;
+import Backend_Logica_Clientes.GestorArchivosClientes;
+
 
 import java.awt.BorderLayout;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +23,19 @@ public class AdminReservasFrame extends javax.swing.JFrame {
 
     private final ArrayList<Reserva> reservas;
     private final DefaultTableModel modelo;
-    private final ArrayList<Cliente> listaClientes = GestionDatos.cargarClientes();
+    private final ArrayList<Cliente> listaClientes;
+
+    {
+        ArrayList<Cliente> temp;
+        try {
+            temp = GestorArchivosClientes.cargarClientes();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            temp = new ArrayList<>();
+        }
+        listaClientes = temp;
+    }
+
     private final ArrayList<Evento> listaEventos = GestorArchivosEventos.cargarEventos();
 
     
