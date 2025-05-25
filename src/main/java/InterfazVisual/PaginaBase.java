@@ -81,6 +81,11 @@ public class PaginaBase extends javax.swing.JFrame {
 
         jButton1.setText("MI PERFIL");
         jButton1.setAlignmentX(0.5F);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("JavaEvents");
@@ -172,6 +177,10 @@ public class PaginaBase extends javax.swing.JFrame {
         // TODO add your handling code here:
         GestorDatosSerializador.guardar(gestor);
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

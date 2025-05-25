@@ -13,10 +13,10 @@ import java.io.Serializable;
 public class Direccion implements Serializable {
 
     public Direccion(String calle, int numero, String ciudad, int codigoPostal) {
-        this.calle = calle;
-        this.numero = numero;
-        this.ciudad = ciudad;
-        this.codigoPostal = codigoPostal;
+        this.setCalle(calle);
+        this.setCiudad(ciudad);
+        this.setNumero(numero);
+        this.setCodigoPostal(codigoPostal);
     }
 
     private String calle;
@@ -61,8 +61,8 @@ public class Direccion implements Serializable {
      * @param ciudad new value of ciudad
      */
     public void setCiudad(String ciudad) {
-        if (ciudad == null || ciudad.trim().isEmpty()) {
-            throw new IllegalArgumentException("El campo de ciudad esta vacio.");
+        if (ciudad == null || ciudad.trim().isEmpty() || !ciudad.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s]+")) {
+            throw new IllegalArgumentException("El campo de ciudad esta vacio o no tiene caracteres correctos.");
         }
         this.ciudad = ciudad;
     }
@@ -103,8 +103,8 @@ public class Direccion implements Serializable {
      * @param calle new value of calle
      */
     public void setCalle(String calle) {
-        if (calle == null || calle.trim().isEmpty()) {
-            throw new IllegalArgumentException("El campo de calle esta vacio.");
+        if (calle == null || calle.trim().isEmpty() || !calle.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s]+")) {
+            throw new IllegalArgumentException("El campo de calle esta vacio o no tiene caracteres correctos.");
         }
         this.calle = calle;
     }

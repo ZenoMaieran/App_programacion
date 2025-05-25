@@ -4,13 +4,18 @@
  */
 package InterfazVisual;
 
-import Backend_Logica.Cliente;
+import Backend_Logica_Clientes.Cliente;
 import Backend_Logica.Direccion;
 import Backend_Logica.GestionDatos;
 import Backend_Logica.TarjetaCredito;
+import Backend_Logica_Eventos.Evento;
+import Backend_Logica_Reservas.GestorArchivosReservas;
+import Backend_Logica_Reservas.Reserva;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -263,13 +268,21 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
     private void seguirComprandoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirComprandoActionPerformed
         // TODO add your handling code here:
         try {
+            if (txtCalle.getText().isEmpty() || txtNumero.getText().isEmpty() || txtCiudad.getText().isEmpty()
+                    || txtCodigoPostal.getText().isEmpty() || txtNombreTitular.getText().isEmpty() || txtNumeroTarjeta.getText().isEmpty()
+                    || txtFecha.getText().isEmpty() || txtDinero.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
+
+                JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos antes de pagar.", "Campos incompletos", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             String calle = txtCalle.getText();
             int numero = Integer.parseInt(txtNumero.getText());
             String ciudad = txtCiudad.getText();
             int codigoPostal = Integer.parseInt(txtCodigoPostal.getText());
             String nombreTitular = txtNombreTitular.getText();
             String numeroTarjeta = txtNumeroTarjeta.getText();
-            String textoFecha = txtFecha.getText(); // Por ejemplo: "2025-05-24"
+            String textoFecha = txtFecha.getText();
             double dinero = Double.parseDouble(txtDinero.getText());
             boolean vip = checkVIP.isSelected();
             String telefono = txtTelefono.getText();
@@ -279,42 +292,79 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
 
             Direccion direccion = new Direccion(calle, numero, ciudad, codigoPostal);
             TarjetaCredito tarjeta = new TarjetaCredito(nombreTitular, numeroTarjeta, fechaCaducidad, dinero);
-            Cliente cliente = new Cliente(direccion, tarjeta, telefono, vip, gestor.getUsuarioLogeado().getNombre(), gestor.getUsuarioLogeado().getCorreo(), gestor.getUsuarioLogeado().getClave());
+
+            if (gestor.getUsuarioLogeado() == null) {
+                JOptionPane.showMessageDialog(this, "No hay usuario logueado. Por favor, reinicia sesión.", "Error de sesión", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Cliente cliente = new Cliente(direccion, tarjeta, telefono, vip,
+                    gestor.getUsuarioLogeado().getNombre(),
+                    gestor.getUsuarioLogeado().getCorreo(),
+                    gestor.getUsuarioLogeado().getClave());
+
             gestor.agregarCliente(cliente);
             gestor.setClienteLogeado(cliente);
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Introduce solo números válidos en los campos numéricos.", "Error de formato numérico", JOptionPane.ERROR_MESSAGE);
+            return;
         } catch (DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, "La fecha debe tener el formato d/M/YY.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
+            return;
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Datos inválidos: " + e.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
+            return;
         } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(this, "Ha ocurrido un error con los datos del usuario logeado. Por favor, reinicia sesión.", "Error de sesión", JOptionPane.ERROR_MESSAGE);
+            return;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        if (gestor.getClienteLogeado().getTarjetaCredito().getDinero() >= (ticketsAComprar * gestor.getDatosEventoComprar().getPrecio())) {
-            double auxDineroTarjeta = gestor.getClienteLogeado().getTarjetaCredito().getDinero();
-            double auxDineroPagar = ticketsAComprar * gestor.getDatosEventoComprar().getPrecio();
-            double resultado = auxDineroTarjeta - auxDineroPagar;
+
+        Cliente cliente = gestor.getClienteLogeado();
+        Evento evento = gestor.getDatosEventoComprar();
+
+        if (cliente == null || cliente.getTarjetaCredito() == null || evento == null) {
+            JOptionPane.showMessageDialog(this, "Error interno: datos incompletos. Reinicia la aplicación.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        double total = ticketsAComprar * evento.getPrecio();
+        if (cliente.getTarjetaCredito().getDinero() >= total) {
+
+            double resultado = cliente.getTarjetaCredito().getDinero() - total;
+            if (checkVIP.isSelected()) {
+                resultado *= 0.9;
+            }
+
             int opcion = JOptionPane.showConfirmDialog(
-                    null,
+                    this,
                     "¿Estás seguro de realizar el pago?",
                     "Confirmación de pago",
                     JOptionPane.YES_NO_OPTION
             );
 
             if (opcion == JOptionPane.YES_OPTION) {
-                gestor.getClienteLogeado().getTarjetaCredito().setDinero(resultado);
-                int entradasActualizadas = gestor.getDatosEventoComprar().getEntradasDisponibles() - this.ticketsAComprar;
-                gestor.getDatosEventoComprar().setMaxEntradas(entradasActualizadas);
-                System.out.println("El usuario eligió SÍ.");
-                System.out.println(gestor.getClienteLogeado().getTarjetaCredito().getDinero());
-                System.out.println(gestor.getDatosEventoComprar().getEntradasDisponibles());
-            } else if (opcion == JOptionPane.NO_OPTION) {
-                System.out.println("El usuario eligió NO.");
+                cliente.getTarjetaCredito().setDinero(resultado);
+                int entradasActualizadas = evento.getEntradasDisponibles() - ticketsAComprar;
+                evento.setMaxEntradas(entradasActualizadas);
+
+                Reserva reserva = new Reserva(cliente, evento, LocalDateTime.now(), resultado);
+                ArrayList<Reserva> reservas = new ArrayList<>();
+                reservas.add(reserva);
+                GestorArchivosReservas.guardarReservas(reservas);
+                JOptionPane.showMessageDialog(this, "Pago realizado con éxito.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                PaginaBase base = new PaginaBase(gestor);
+                base.setVisible(true);
+                this.setVisible(false);
             }
+
         } else {
-            JOptionPane.showMessageDialog(this, "No hay suficiente dinero en la tarjeta. ", "Fondos insuficientes.", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No hay suficiente dinero en la tarjeta.", "Fondos insuficientes", JOptionPane.ERROR_MESSAGE);
         }
+
 
     }//GEN-LAST:event_seguirComprandoActionPerformed
 

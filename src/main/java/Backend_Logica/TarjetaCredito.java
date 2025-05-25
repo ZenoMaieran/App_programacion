@@ -13,10 +13,10 @@ import java.time.LocalDate;
 public class TarjetaCredito implements Serializable {
 
     public TarjetaCredito(String nombreTitular, String numero, LocalDate fechaCaducidad, double dinero) {
-        this.nombreTitular = nombreTitular;
-        this.numero = numero;
-        this.fechaCaducidad = fechaCaducidad;
-        this.dinero = dinero;
+        this.setNombreTitular(nombreTitular);
+        this.setNumero(numero);
+        this.setFechaCaducidad(fechaCaducidad);
+        this.setDinero(dinero);
     }
     
     private String nombreTitular;
@@ -103,8 +103,8 @@ public class TarjetaCredito implements Serializable {
      * @param nombreTitular new value of nombreTitular
      */
     public void setNombreTitular(String nombreTitular) {
-        if (nombreTitular == null || nombreTitular.trim().isEmpty()) {
-            throw new IllegalArgumentException("El nombre del titular no puede estar vacío.");
+        if (nombreTitular == null || nombreTitular.trim().isEmpty() || !nombreTitular.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\\s]+")) {
+            throw new IllegalArgumentException("El nombre del titular no puede estar vacío o tener caracteres que no sean letras.");
         }
         this.nombreTitular = nombreTitular;
     }

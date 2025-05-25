@@ -7,7 +7,7 @@ package Backend_Logica;
 import Backend_Logica_Eventos.Evento;
 import java.io.Serializable;
 import java.util.ArrayList;
-
+import Backend_Logica_Clientes.Cliente;
 /**
  *
  * @author anton
@@ -23,7 +23,6 @@ public class GestionDatos implements Serializable{
     private ArrayList listaClientes;
     private Persona usuarioLogeado;
     private Evento datosEventoComprar;
-    
     private Cliente clienteLogeado;
 
     /**

@@ -5,6 +5,7 @@
 package Backend_Logica;
 import java.io.*;
 import java.util.ArrayList;
+import Backend_Logica_Clientes.Cliente;
 /**
  *
  * @author Antonio Zeno Maieran
