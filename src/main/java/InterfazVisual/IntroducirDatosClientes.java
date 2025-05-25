@@ -305,6 +305,7 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
 
             gestor.agregarCliente(cliente);
             gestor.setClienteLogeado(cliente);
+            gestor.setUsuarioLogeado(null);
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Introduce solo números válidos en los campos numéricos.", "Error de formato numérico", JOptionPane.ERROR_MESSAGE);
