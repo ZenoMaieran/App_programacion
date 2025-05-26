@@ -130,7 +130,7 @@ public class InicioSesion extends javax.swing.JFrame {
         String email = emailT.getText();
         String contraseña = contraseñaT.getText();
         if (email.equals("admin@javaevents.com") && contraseña.equals("admin")) {
-            AdminEventosFrame admin = new AdminEventosFrame();
+            AdminFuncionalidades admin = new AdminFuncionalidades(gestor, ventanaBase);
             this.setVisible(false);
             admin.setVisible(true);
             return;
