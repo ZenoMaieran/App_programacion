@@ -112,6 +112,12 @@ public class Cliente extends Persona implements Serializable {
            this.direccion = direccion;
         }
 }
+    
+    
+    public String getId() {
+        return getCorreo();
+}
+
 
     @Override
     public String toString() {

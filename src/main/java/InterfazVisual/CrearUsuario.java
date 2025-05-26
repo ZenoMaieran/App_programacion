@@ -1,36 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package InterfazVisual;
+        package InterfazVisual;
 
-import Backend_Logica.Persona;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import Backend_Logica.GestionDatos;
+    import Backend_Logica.*;
+    import Backend_Logica_Clientes.Cliente;
+    import javax.swing.*;
+    import java.time.LocalDate;
 
-/**
- *
- * @author anton
- */
-public class CrearUsuario extends javax.swing.JFrame {
+    public class CrearUsuario extends javax.swing.JFrame {
 
-    private GestionDatos gestor;
-    private JFrame ventanaBase;
+        private GestionDatos gestor;
+        private JFrame ventanaBase;
 
-    /**
-     * Creates new form CrearUsuario
-     */
-    public CrearUsuario(JFrame base, GestionDatos gestor) {
-        this.setLocationRelativeTo(null);
-        this.gestor = gestor;
-        this.ventanaBase = base;
-        initComponents();
-    }
+        public CrearUsuario(JFrame base, GestionDatos gestor) {
+            this.ventanaBase = base;
+            this.gestor = gestor;
+            initComponents();
+            this.setLocationRelativeTo(null);
+        }
+        public CrearUsuario() {
+            this(new JFrame(), new GestionDatos()); // Llama al constructor principal
+}
 
-    private CrearUsuario() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -49,7 +39,7 @@ public class CrearUsuario extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         contraseñaFT = new javax.swing.JPasswordField();
-        validacion_contraseñaFT = new javax.swing.JPasswordField();
+        validacionFT = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Crear Usuario");
@@ -61,6 +51,12 @@ public class CrearUsuario extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Introduce tu nombre:");
+
+        nombreFT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreFTActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Introduce tu correo: ");
@@ -103,7 +99,7 @@ public class CrearUsuario extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(contraseñaFT, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
-                                    .addComponent(validacion_contraseñaFT)))))
+                                    .addComponent(validacionFT)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(151, 151, 151)
                         .addComponent(jButton1)))
@@ -127,7 +123,7 @@ public class CrearUsuario extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(validacion_contraseñaFT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(validacionFT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(27, 27, 27))
@@ -137,32 +133,40 @@ public class CrearUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        String nombre = nombreFT.getText().trim();
-        String correo = correoFT.getText().trim();
-        String contraseña = contraseñaFT.getText().trim();
-        String validacion = validacion_contraseñaFT.getText().trim();
         try {
+            String nombre = nombreFT.getText().trim();
+            String correo = correoFT.getText().trim();
+            String contraseña = new String(contraseñaFT.getPassword());
+            String validacion = new String(validacionFT.getPassword());
+
             if (!contraseña.equals(validacion)) {
                 throw new IllegalArgumentException("Las contraseñas no coinciden");
             }
-            Persona nuevoUsuario = new Persona(nombre, correo, contraseña);
-            gestor.agregarUsuario(nuevoUsuario);
-            gestor.setUsuarioLogeado(nuevoUsuario);
-            JOptionPane.showMessageDialog(null, "Cuenta creada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            PaginaBase base = new PaginaBase(gestor);
-            this.setVisible(false);
-            base.setVisible(true);
-        } catch (IllegalArgumentException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error al crear cuenta", JOptionPane.ERROR_MESSAGE);
-        }
 
+            Direccion dir = new Direccion("Calle Prueba", 123, "Madrid", 28000);
+            TarjetaCredito tarjeta = new TarjetaCredito("Nombre Prueba", "1234567812345678", LocalDate.of(2027, 12, 1), 100.0);
+            Cliente nuevo = new Cliente(dir, tarjeta, "600123456", false, nombre, correo, contraseña);
+
+            gestor.agregarUsuario(nuevo);
+            gestor.setUsuarioLogeado(nuevo);
+
+            JOptionPane.showMessageDialog(this, "Cuenta creada con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            PaginaBase base = new PaginaBase(gestor, nuevo);
+            base.setVisible(true);
+            this.setVisible(false);
+        } catch (IllegalArgumentException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         ventanaBase.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void nombreFTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreFTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreFTActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,6 +212,6 @@ public class CrearUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JFormattedTextField nombreFT;
-    private javax.swing.JPasswordField validacion_contraseñaFT;
+    private javax.swing.JPasswordField validacionFT;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,31 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package InterfazVisual;
-import Backend_Logica.GestorDatosSerializador;
-import Backend_Logica.GestionDatos;
-/**
- *
- * @author anton
- */
-public class PaginaBase extends javax.swing.JFrame {
-    
-    private GestionDatos gestor;
-    
-    /**
-     * Creates new form PaginaBase
-     */
-    public PaginaBase(GestionDatos gestor) {
-        this.setLocationRelativeTo(null);
-        this.gestor = gestor;
-        initComponents();
-        
-    }
+    package InterfazVisual;
 
-    private PaginaBase() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    import Backend_Logica.GestionDatos;
+    import Backend_Logica.GestorDatosSerializador;
+    import Backend_Logica_Clientes.Cliente;
+    import javax.swing.*;
+
+    public class PaginaBase extends javax.swing.JFrame {
+
+        private GestionDatos gestor;
+        private Cliente clienteActual;
+
+        public PaginaBase(GestionDatos gestor, Cliente clienteActual) {
+            this.gestor = gestor;
+            this.clienteActual = clienteActual;
+            initComponents();
+            this.setLocationRelativeTo(null);
+        }
+        
+        public PaginaBase() {
+        this(new GestionDatos(), null);
+}
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -50,7 +46,6 @@ public class PaginaBase extends javax.swing.JFrame {
         menuReservas = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu7 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -82,11 +77,6 @@ public class PaginaBase extends javax.swing.JFrame {
 
         jButton1.setText("MI PERFIL");
         jButton1.setAlignmentX(0.5F);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setText("JavaEvents");
@@ -107,20 +97,16 @@ public class PaginaBase extends javax.swing.JFrame {
         menuReservas.setText("Reservas");
 
         jMenuItem2.setText("Ir a reservas");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         menuReservas.add(jMenuItem2);
 
         jMenuBar1.add(menuReservas);
 
         jMenu7.setText("Cerrar Sesion");
-
-        jMenuItem3.setText("Cerrar");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu7.add(jMenuItem3);
-
         jMenuBar1.add(jMenu7);
 
         setJMenuBar(jMenuBar1);
@@ -162,7 +148,7 @@ public class PaginaBase extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(ConsultarReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(83, 140, Short.MAX_VALUE))
+                .addGap(83, 141, Short.MAX_VALUE))
         );
 
         pack();
@@ -176,6 +162,11 @@ public class PaginaBase extends javax.swing.JFrame {
         
     }//GEN-LAST:event_BusquedaEventoActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        GestorDatosSerializador.guardar(gestor);
+    }//GEN-LAST:event_formWindowClosing
+
     private void menuEventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEventosActionPerformed
         // TODO add your handling code here:
         Eventos eventos = new Eventos(gestor);
@@ -183,23 +174,10 @@ public class PaginaBase extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_menuEventosActionPerformed
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-        GestorDatosSerializador.guardar(gestor);
-    }//GEN-LAST:event_formWindowClosing
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-        gestor.setClienteLogeado(null);
-        VentanaPrincipal inicio = new VentanaPrincipal();
-        this.setVisible(false);
-        inicio.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        ReservasClientes ventana = new ReservasClientes(gestor, clienteActual.getCorreo());
+        ventana.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,7 +227,6 @@ public class PaginaBase extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem menuEventos;
     private javax.swing.JMenu menuReservas;
     // End of variables declaration//GEN-END:variables

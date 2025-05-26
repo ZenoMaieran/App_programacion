@@ -42,6 +42,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ir a reservas"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem2ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -49,16 +52,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Cerrar Sesion"/>
           </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem3">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Cerrar"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem3ActionPerformed"/>
-              </Events>
-            </MenuItem>
-          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>
@@ -132,7 +125,7 @@
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <Component id="ConsultarReservas" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="83" pref="140" max="32767" attributes="0"/>
+              <EmptySpace min="83" pref="141" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -174,9 +167,6 @@
         <Property name="text" type="java.lang.String" value="MI PERFIL"/>
         <Property name="alignmentX" type="float" value="0.5"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>

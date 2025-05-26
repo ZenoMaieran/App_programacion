@@ -2,6 +2,7 @@ package Backend_Logica_Reservas;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class GestorArchivosReservas {
     private static final String RUTA_RESERVAS = "reservas.dat";
@@ -25,4 +26,16 @@ public class GestorArchivosReservas {
             return new ArrayList<>();
         }
     }
+    
+    public static List<Reserva> obtenerReservasCliente(String idCliente) {
+    List<Reserva> todas = cargarReservas();
+    List<Reserva> filtradas = new ArrayList<>();
+    for (Reserva r : todas) {
+        if (r.getIdCliente() != null && r.getIdCliente().equals(idCliente)) {
+            filtradas.add(r);
+        }
+    }
+    return filtradas;
+}
+
 }

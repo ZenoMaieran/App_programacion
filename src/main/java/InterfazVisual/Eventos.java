@@ -38,7 +38,7 @@ public class Eventos extends javax.swing.JFrame {
         this.eventos = new ArrayList();
         eventos = GestorArchivosEventos.cargarEventos();
         if (eventos != null && !eventos.isEmpty()) {
-            iterador = eventos.listIterator(); // ← usa la variable de clase
+            iterador = eventos.listIterator(); // usa la variable de clase
             if (iterador.hasNext()) {
                 Evento primero = iterador.next();
                 panelDatosEventos.mostrarEvento(primero);

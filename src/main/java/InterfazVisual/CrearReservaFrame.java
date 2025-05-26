@@ -22,7 +22,7 @@ public class CrearReservaFrame extends javax.swing.JFrame {
 
     private final DefaultTableModel modeloTabla;
     private final ArrayList<Reserva> listaReservas;
-    private final Reserva reservaEditada;   // null si es alta
+    private final Reserva reservaEditada;   
     private final int filaEditar;
     private final ArrayList<Cliente> listaClientes;
     private final ArrayList<Evento> listaEventos;

@@ -1,36 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package InterfazVisual;
+    package InterfazVisual;
 
-import javax.swing.JFrame;
-import Backend_Logica.GestionDatos;
-import Backend_Logica.Persona;
-import java.util.ArrayList;
-import java.util.Iterator;
-import javax.swing.JOptionPane;
-/**
- *
- * @author anton
- */
-public class InicioSesion extends javax.swing.JFrame {
-    private GestionDatos gestor;
-    private JFrame ventanaBase;
-    
-    /**
-     * Creates new form InicioSesion
-     */
-    public InicioSesion(JFrame base, GestionDatos gestor) {
-        this.setLocationRelativeTo(null);
-        this.gestor = gestor;
-        this.ventanaBase = base;
-        initComponents();
-    }
+    import Backend_Logica.GestionDatos;
+    import Backend_Logica.Persona;
+    import Backend_Logica_Clientes.Cliente;
+    import javax.swing.*;
+    import java.util.ArrayList;
 
-    private InicioSesion() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    public class InicioSesion extends javax.swing.JFrame {
+
+        private GestionDatos gestor;
+        private JFrame ventanaBase;
+
+        public InicioSesion(JFrame base, GestionDatos gestor) {
+            this.ventanaBase = base;
+            this.gestor = gestor;
+            initComponents();
+            this.setLocationRelativeTo(null);
+        }
+        
+        public InicioSesion() {
+            this(new JFrame(), new GestionDatos()); // llamada al constructor principal
+        }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -123,41 +114,33 @@ public class InicioSesion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         String email = emailT.getText();
-        String contraseña = contraseñaT.getText();
-        if (email.equals("admin@javaevents.com") && contraseña.equals("admin")){
-            AdminEventosFrame admin = new AdminEventosFrame();
+        String contraseña = new String(contraseñaT.getPassword());
+
+        if (email.equals("admin@javaevents.com") && contraseña.equals("admin")) {
+            new AdminEventosFrame().setVisible(true);
             this.setVisible(false);
-            admin.setVisible(true);
             return;
         }
-        ArrayList<Persona> auxiliar = gestor.getListaUsuarios();
-        Iterator<Persona> iterator = auxiliar.iterator();
-        boolean existe = false;
-        boolean comprobarContrasena = false;
-        while (!existe && iterator.hasNext()){
-            Persona p = iterator.next();
-            if (p.getCorreo().equals(email)){
-                existe = true;
+
+        ArrayList<Persona> usuarios = gestor.getListaUsuarios();
+        for (Persona p : usuarios) {
+            if (p.getCorreo().equals(email)) {
                 if (p.getClave().equals(contraseña)) {
-                    comprobarContrasena = true;
                     gestor.setUsuarioLogeado(p);
+                    if (p instanceof Cliente clienteLogueado) {
+                        PaginaBase pagina = new PaginaBase(gestor, clienteLogueado);
+                        pagina.setVisible(true);
+                        this.setVisible(false);
+                        return;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
                 }
-                
             }
         }
-        if (existe && comprobarContrasena){
-            JOptionPane.showMessageDialog(null, "Has iniciado sesión correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            PaginaBase cliente = new PaginaBase(gestor);
-            cliente.setVisible(true);
-            this.setVisible(false);
-        } else if (existe && !comprobarContrasena){
-            JOptionPane.showMessageDialog(this,"Error al iniciar sesión, contraseña incorrecta","ERROR",JOptionPane.WARNING_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this,"Error al iniciar sesión, crea una cuenta primero. ","ERROR",JOptionPane.WARNING_MESSAGE);
-
-        }
+        JOptionPane.showMessageDialog(this, "Usuario no registrado", "Error", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
