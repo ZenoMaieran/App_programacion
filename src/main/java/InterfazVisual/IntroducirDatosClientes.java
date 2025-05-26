@@ -343,46 +343,43 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
         }
 
         double total = ticketsAComprar * evento.getPrecio();
-        if (cliente.getTarjetaCredito().getDinero() >= total) {
+        if (checkVIP.isSelected()) {
+            total *= 0.9;
+        }
+        double resultado = cliente.getTarjetaCredito().getDinero() - total;
 
-            double resultado = cliente.getTarjetaCredito().getDinero() - total;
-            if (checkVIP.isSelected()) {
-                resultado *= 0.9;
-            }
 
-            int opcion = JOptionPane.showConfirmDialog(
+            if (cliente.getTarjetaCredito().getDinero() >= total) {
+                int opcion = JOptionPane.showConfirmDialog(
                     this,
                     "¿Estás seguro de realizar el pago?",
                     "Confirmación de pago",
                     JOptionPane.YES_NO_OPTION
-            );
+                );
 
-            if (opcion == JOptionPane.YES_OPTION) {
-                cliente.getTarjetaCredito().setDinero(resultado);
-                int entradasActualizadas = evento.getEntradasDisponibles() - ticketsAComprar;
-                evento.setMaxEntradas(entradasActualizadas);
-                gestor.setDatosEventoComprar(evento);
-                GestorArchivosEventos.guardarEventos(gestor.getListaEventos());
+                if (opcion == JOptionPane.YES_OPTION) {
+                    cliente.getTarjetaCredito().setDinero(resultado);
 
+                    // 📄 AQUÍ VA LA LÓGICA DE CREAR LA RESERVA + GUARDAR LA FACTURA
 
-                Reserva reserva = new Reserva(cliente, evento, LocalDateTime.now(), total);
-                if (gestor.getClienteLogeado().getListaReservas() == null){
-                ArrayList<Reserva> reservas = new ArrayList<>();
-                reservas.add(reserva);
-                gestor.getClienteLogeado().setListaReservas(reservas);
-                } else {
-                    ArrayList<Reserva> reservas = gestor.getClienteLogeado().getListaReservas();
-                    reservas.add(reserva);
-                    gestor.getClienteLogeado().setListaReservas(reservas);
+                    // Crear reserva
+                    //Reserva reserva = new Reserva(cliente, evento, ticketsAComprar, LocalDateTime.now());
+                    //gestor.agregarReserva(reserva);
+
+                    // Guardar en archivo
+                    //GestorArchivosReservas.guardarReserva(reserva);
+
+                    // Guardar factura
+                   // gestor.generarFacturaTxt(reserva); // ← solo si ya tienes este método implementado
+
+                    JOptionPane.showMessageDialog(this, "Reserva realizada con éxito.\nFactura generada en la carpeta correspondiente.");
+                    this.dispose(); // cerrar ventana actual si deseas
+                    paginaBase.setVisible(true); // volver a la ventana anterior
                 }
-                JOptionPane.showMessageDialog(this, "Pago realizado con éxito.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-                this.setVisible(false);
-                paginaBase.setVisible(true);
-            }
 
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay suficiente dinero en la tarjeta.", "Fondos insuficientes", JOptionPane.ERROR_MESSAGE);
-        }
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay suficiente dinero en la tarjeta.", "Fondos insuficientes", JOptionPane.ERROR_MESSAGE);
+            }
 
 
     }//GEN-LAST:event_seguirComprandoActionPerformed

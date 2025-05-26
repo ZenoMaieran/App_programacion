@@ -9,15 +9,9 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import Backend_Logica.Direccion;
 import Backend_Logica.TarjetaCredito;
-import java.time.LocalDate;
-import java.io.PrintWriter;
-import java.io.FileWriter;
+import Backend_Logica_Facturas.FacturaGenerator;
 import java.io.IOException;
 
-
-/**
- * Ventana modal para crear o editar una reserva (modo único archivo)
- */
 public class CrearReservaFrame extends javax.swing.JFrame {
 
     private final DefaultTableModel modeloTabla;
@@ -26,7 +20,6 @@ public class CrearReservaFrame extends javax.swing.JFrame {
     private final int filaEditar;
     private final ArrayList<Cliente> listaClientes;
     private final ArrayList<Evento> listaEventos;
-
 
     public CrearReservaFrame(DefaultTableModel modeloTabla,
                              ArrayList<Reserva> listaReservas,
@@ -52,7 +45,7 @@ public class CrearReservaFrame extends javax.swing.JFrame {
        } else {
            setTitle("Añadir reserva");
        }
-}
+    }
 
     private void cargarCombosDesdeSistema() {
         comboCliente.removeAllItems();
@@ -66,25 +59,24 @@ public class CrearReservaFrame extends javax.swing.JFrame {
         }
     }
 
-
     /* Botón Guardar --------------------------- */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             Cliente cli = (Cliente) comboCliente.getSelectedItem();
-            Evento  ev  = (Evento)  comboEvento.getSelectedItem();
+            Evento ev = (Evento) comboEvento.getSelectedItem();
             double precio = Double.parseDouble(txtPrecio.getText());
 
-            // Aquí no pido fecha, se pone ahora mismo
+            // Fecha actual
             Reserva nueva = new Reserva(cli, ev, LocalDateTime.now(), precio);
 
-            if (reservaEditada == null) {              // alta
+            if (reservaEditada == null) {              // Alta
                 listaReservas.add(nueva);
                 modeloTabla.addRow(new Object[]{
                     cli.getNombre(), ev.getTitulo(),
                     nueva.getFechaReserva().toString(),
                     precio
                 });
-            } else {                                   // modificación
+            } else {                                   // Modificación
                 listaReservas.set(filaEditar, nueva);
                 modeloTabla.setValueAt(cli.getNombre(), filaEditar, 0);
                 modeloTabla.setValueAt(ev.getTitulo(), filaEditar, 1);
@@ -93,42 +85,16 @@ public class CrearReservaFrame extends javax.swing.JFrame {
             }
 
             GestorArchivosReservas.guardarReservas(listaReservas);
-            generarFactura(nueva);
 
+            // ✅ Generar la factura usando FacturaGenerator
+            FacturaGenerator.generarFactura(nueva);
+
+            JOptionPane.showMessageDialog(this, "Reserva y factura generadas con éxito.");
             dispose();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Precio no válido.");
         }
     }
-
-    
-    private void generarFactura(Reserva reserva) {
-    String nombreArchivo = "factura_" + reserva.getCliente().getCorreo().replace("@", "_") + "_" +
-                           reserva.getFechaReserva().toLocalDate() + ".txt";
-    try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivo))) {
-        writer.println("====== FACTURA DE RESERVA ======");
-        writer.println("Fecha de reserva: " + reserva.getFechaReserva());
-        writer.println("Importe: " + reserva.getPrecioFinal() + " €");
-
-        writer.println("\n-- Datos del Evento --");
-        writer.println("Título: " + reserva.getEvento().getTitulo());
-        writer.println("Tipo: " + reserva.getEvento().getTipo());
-        writer.println("Dirección: " + reserva.getEvento().getDireccion().toString());
-        writer.println("Fecha del evento: " + reserva.getEvento().getFecha());
-
-        writer.println("\n-- Datos del Cliente --");
-        writer.println("Nombre: " + reserva.getCliente().getNombre());
-        writer.println("Correo: " + reserva.getCliente().getCorreo());
-        writer.println("Teléfono: " + reserva.getCliente().getTelefono());
-        writer.println("Dirección: " + reserva.getCliente().getDireccion().toString());
-        writer.println("VIP: " + (reserva.getCliente().isVip() ? "Sí (10% descuento)" : "No"));
-
-        writer.println("===============================");
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "Error al generar la factura: " + e.getMessage());
-    }
-}
-
 
     /* ========== GUI ========== */
     private void initComponents() {
