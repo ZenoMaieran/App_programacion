@@ -41,7 +41,7 @@ public class PaginaBase extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         BusquedaEvento = new javax.swing.JButton();
         ConsultarReservas = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        miPerfil = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -79,11 +79,11 @@ public class PaginaBase extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("MI PERFIL");
-        jButton1.setAlignmentX(0.5F);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        miPerfil.setText("MI PERFIL");
+        miPerfil.setAlignmentX(0.5F);
+        miPerfil.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                miPerfilActionPerformed(evt);
             }
         });
 
@@ -137,7 +137,7 @@ public class PaginaBase extends javax.swing.JFrame {
                 .addContainerGap(135, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(miPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
             .addGroup(layout.createSequentialGroup()
                 .addGap(167, 167, 167)
@@ -155,7 +155,7 @@ public class PaginaBase extends javax.swing.JFrame {
                         .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(jButton1)))
+                        .addComponent(miPerfil)))
                 .addGap(38, 38, 38)
                 .addComponent(BusquedaEvento)
                 .addGap(18, 18, 18)
@@ -189,10 +189,14 @@ public class PaginaBase extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowClosing
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void miPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miPerfilActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+        if (gestor.getClienteLogeado() == null){
+            PerfilUsuario perfil = new PerfilUsuario(gestor, this);
+            this.setVisible(false);
+            perfil.setVisible(true);
+        }
+    }//GEN-LAST:event_miPerfilActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
@@ -254,7 +258,6 @@ public class PaginaBase extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BusquedaEvento;
     private javax.swing.JButton ConsultarReservas;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -265,5 +268,6 @@ public class PaginaBase extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem menuEventos;
     private javax.swing.JMenu menuReservas;
+    private javax.swing.JButton miPerfil;
     // End of variables declaration//GEN-END:variables
 }
