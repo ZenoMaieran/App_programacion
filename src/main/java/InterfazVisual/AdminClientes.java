@@ -5,7 +5,11 @@
 package InterfazVisual;
 
 import Backend_Logica.GestionDatos;
+import Backend_Logica.Persona;
+import Backend_Logica_Clientes.Cliente;
+import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,7 +25,31 @@ public class AdminClientes extends javax.swing.JFrame {
         initComponents();
         this.gestor = gestor;
         this.funcionalidades = funcionalidades;
+        DefaultTableModel modeloUsuarios = new DefaultTableModel();
+        modeloUsuarios.addColumn("Nombre");
+        modeloUsuarios.addColumn("Correo");
+        modeloUsuarios.addColumn("Clave");
         
+        DefaultTableModel modeloClientes = new DefaultTableModel();
+        modeloClientes.addColumn("Nombre");
+        modeloClientes.addColumn("Correo");
+        modeloClientes.addColumn("Clave");
+        modeloClientes.addColumn("Direccion");
+        modeloClientes.addColumn("Tarjeta");
+        modeloClientes.addColumn("Telefono");
+        modeloClientes.addColumn("VIP");
+        
+        ArrayList<Persona> usuarios = gestor.getListaUsuarios();
+        ArrayList<Cliente> clientes = gestor.getListaClientes();
+        for (Persona p : usuarios){
+            modeloUsuarios.addRow(new Object[]{p.getNombre(), p.getCorreo(), p.getClave()});
+        }
+        tablaUsuarios.setModel(modeloUsuarios);
+        
+        for (Cliente c : clientes){
+            modeloClientes.addRow(new Object[]{c.getNombre(), c.getCorreo(), c.getClave(), c.getDireccion(), c.getTelefono(), c.getTarjetaCredito(), c.isVip()});
+        }
+        tablaClientes.setModel(modeloClientes);
     }
 
     private AdminClientes() {
@@ -38,9 +66,9 @@ public class AdminClientes extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaUsuarios = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tablaClientes = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -51,7 +79,7 @@ public class AdminClientes extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -62,9 +90,9 @@ public class AdminClientes extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaUsuarios);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -75,7 +103,7 @@ public class AdminClientes extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tablaClientes);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("USUARIOS");
@@ -90,15 +118,15 @@ public class AdminClientes extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(43, 43, 43)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(133, 133, 133))
+                .addGap(187, 187, 187)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1043, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(143, 143, 143)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addGap(232, 232, 232))
+                .addGap(496, 496, 496))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +190,7 @@ public class AdminClientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tablaClientes;
+    private javax.swing.JTable tablaUsuarios;
     // End of variables declaration//GEN-END:variables
 }
