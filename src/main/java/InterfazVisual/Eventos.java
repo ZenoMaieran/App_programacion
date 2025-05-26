@@ -29,23 +29,22 @@ public class Eventos extends javax.swing.JFrame {
      * Creates new form Eventos
      */
     private ArrayList<Evento> eventos;
-    private ListIterator<Evento> iterador;
+    private int indiceEventoActual = 0;
     private GestionDatos gestor;
     private JFrame paginaBase;
+    private Evento eventoActual;
 
     public Eventos(GestionDatos gestor, JFrame base) {
         initComponents();
         this.gestor = gestor;
         this.paginaBase = base;
         this.setLocationRelativeTo(null);
-        this.eventos = new ArrayList();
-        eventos = GestorArchivosEventos.cargarEventos();
+        this.eventos = gestor.getListaEventos();
+
         if (eventos != null && !eventos.isEmpty()) {
-            iterador = eventos.listIterator(); // ← usa la variable de clase
-            if (iterador.hasNext()) {
-                Evento primero = iterador.next();
-                panelDatosEventos.mostrarEvento(primero);
-            }
+            indiceEventoActual = 0;
+            eventoActual = eventos.get(indiceEventoActual);
+            panelDatosEventos.mostrarEvento(eventoActual);
         }
 
     }
@@ -179,8 +178,18 @@ public class Eventos extends javax.swing.JFrame {
             double precio = Double.parseDouble(panelDatosEventos.getPrecio().getText());
             int ticketsDisponibles = Integer.parseInt(panelDatosEventos.getTxtTickets().getText());
 
-            Evento evento = new Evento(titulo, tipo, direccion, fecha, precio, calificacion, ticketsDisponibles);
-            gestor.setDatosEventoComprar(evento);
+            eventoActual.setTitulo(titulo);
+            eventoActual.setTipo(tipo);
+            eventoActual.setDireccion(direccion);
+            eventoActual.setFecha(fecha);
+            eventoActual.setCalificacion(calificacion);
+            eventoActual.setPrecio(precio);
+            eventoActual.setMaxEntradas(ticketsDisponibles);
+
+            // 🟢 Usamos directamente el índice
+            gestor.setDatosEventoComprar(eventos.get(indiceEventoActual));
+            gestor.setIndiceEvento(indiceEventoActual); // por si lo usas en Compra
+
             System.out.println("Evento guardado bien");
             PaginaCompra datosCompra = new PaginaCompra(gestor, paginaBase);
             this.setVisible(false);
@@ -197,19 +206,19 @@ public class Eventos extends javax.swing.JFrame {
 
     private void siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteActionPerformed
         // TODO add your handling code here:
-        if (iterador != null && iterador.hasNext()) {
-            panelDatosEventos.mostrarEvento(iterador.next());
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay más eventos", "ERROR", JOptionPane.WARNING_MESSAGE);
+        if (indiceEventoActual < eventos.size() - 1) {
+            indiceEventoActual++;
+            eventoActual = eventos.get(indiceEventoActual);
+            panelDatosEventos.mostrarEvento(eventoActual);
         }
     }//GEN-LAST:event_siguienteActionPerformed
 
     private void anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorActionPerformed
         // TODO add your handling code here:
-        if (iterador != null && iterador.hasPrevious()) {
-            panelDatosEventos.mostrarEvento(iterador.previous());
-        } else {
-            JOptionPane.showMessageDialog(this, "No hay eventos anteriores", "ERROR", JOptionPane.WARNING_MESSAGE);
+        if (indiceEventoActual > 0) {
+            indiceEventoActual--;
+            eventoActual = eventos.get(indiceEventoActual);
+            panelDatosEventos.mostrarEvento(eventoActual);
         }
     }//GEN-LAST:event_anteriorActionPerformed
 

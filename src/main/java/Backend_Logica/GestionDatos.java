@@ -24,6 +24,46 @@ public class GestionDatos implements Serializable{
     private Persona usuarioLogeado;
     private Evento datosEventoComprar;
     private Cliente clienteLogeado;
+    private int indiceEvento;
+
+    /**
+     * Get the value of indiceEvento
+     *
+     * @return the value of indiceEvento
+     */
+    public int getIndiceEvento() {
+        return indiceEvento;
+    }
+
+    /**
+     * Set the value of indiceEvento
+     *
+     * @param indiceEvento new value of indiceEvento
+     */
+    public void setIndiceEvento(int indiceEvento) {
+        this.indiceEvento = indiceEvento;
+    }
+
+    private ArrayList<Evento> listaEventos;
+
+    /**
+     * Get the value of listaEventos
+     *
+     * @return the value of listaEventos
+     */
+    public ArrayList<Evento> getListaEventos() {
+        return listaEventos;
+    }
+
+    /**
+     * Set the value of listaEventos
+     *
+     * @param listaEventos new value of listaEventos
+     */
+    public void setListaEventos(ArrayList<Evento> listaEventos) {
+        this.listaEventos = listaEventos;
+    }
+
     
     
 

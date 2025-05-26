@@ -5,6 +5,7 @@
 package InterfazVisual;
 import Backend_Logica.GestorDatosSerializador;
 import Backend_Logica.GestionDatos;
+import Backend_Logica_Eventos.GestorArchivosEventos;
 /**
  *
  * @author anton
@@ -192,7 +193,7 @@ public class PaginaBase extends javax.swing.JFrame {
         // TODO add your handling code here:
         GestorDatosSerializador.guardarUsuarios(gestor);
         GestorDatosSerializador.guardarClientes(gestor);
-        
+        GestorArchivosEventos.guardarEventos(gestor.getListaEventos());
 
     }//GEN-LAST:event_formWindowClosing
 

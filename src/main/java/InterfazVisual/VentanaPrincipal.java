@@ -18,7 +18,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         gestor = GestorDatosSerializador.cargarTodo();
-        
         //System.out.println(gestor.getListaClientes().toString());
         //System.out.println(gestor.getListaUsuarios().toString());
         //System.out.println(gestor.getListaClientes().getFirst().getListaReservas().toString());

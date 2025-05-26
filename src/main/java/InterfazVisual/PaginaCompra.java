@@ -6,10 +6,13 @@ package InterfazVisual;
 
 import Backend_Logica.GestionDatos;
 import Backend_Logica_Eventos.Evento;
+import Backend_Logica_Eventos.GestorArchivosEventos;
+import Backend_Logica_Reservas.Reserva;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -132,9 +135,67 @@ public class PaginaCompra extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             int tickets = Integer.parseInt(txtTicketsAComprar.getText());
-            IntroducirDatosClientes pagar = new IntroducirDatosClientes(gestor, tickets, paginaBase);
-            this.setVisible(false);
-            pagar.setVisible(true);
+
+            if (gestor.getClienteLogeado() == null) {
+                IntroducirDatosClientes pagar = new IntroducirDatosClientes(gestor, tickets, paginaBase);
+                this.setVisible(false);
+                pagar.setVisible(true);
+            } else {
+                double precioUnitario = gestor.getDatosEventoComprar().getPrecio();
+                double total = precioUnitario * tickets;
+
+                if (gestor.getClienteLogeado().isVip()) {
+                    total *= 0.9; // 10% descuento para VIP
+                }
+
+                double dineroActual = gestor.getClienteLogeado().getTarjetaCredito().getDinero();
+
+                if (dineroActual < total) {
+                    JOptionPane.showMessageDialog(this, "Saldo insuficiente para completar el pago.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                int opcion = JOptionPane.showConfirmDialog(
+                        this,
+                        "¿Estás seguro de realizar el pago de " + total + "€?",
+                        "Confirmación de pago",
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    // Descuenta dinero
+                    gestor.getClienteLogeado().getTarjetaCredito().setDinero(dineroActual - total);
+
+                    // Actualiza evento en lista por índice
+                    int indice = gestor.getIndiceEvento();
+                    Evento eventoCompra = gestor.getListaEventos().get(indice);
+                    eventoCompra.reducirEntradasDisponibles(tickets);
+
+                    // Guardar cambios
+                    GestorArchivosEventos.guardarEventos(gestor.getListaEventos());
+
+                    // Crear reserva
+                    Reserva reserva = new Reserva(
+                            gestor.getClienteLogeado(),
+                            gestor.getDatosEventoComprar(),
+                            LocalDateTime.now(),
+                            total
+                    );
+
+                    if (gestor.getClienteLogeado().getListaReservas() == null) {
+                        ArrayList<Reserva> nuevasReservas = new ArrayList<>();
+                        nuevasReservas.add(reserva);
+                        gestor.getClienteLogeado().setListaReservas(nuevasReservas);
+                    } else {
+                        gestor.getClienteLogeado().getListaReservas().add(reserva);
+                    }
+
+                    JOptionPane.showMessageDialog(this, "Pago realizado con éxito.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                    this.setVisible(false);
+                    paginaBase.setVisible(true);
+                }
+            }
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Introduce un número válido de tickets.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
@@ -154,7 +215,7 @@ public class PaginaCompra extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

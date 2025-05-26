@@ -6,6 +6,7 @@ package Backend_Logica;
 import java.io.*;
 import java.util.ArrayList;
 import Backend_Logica_Clientes.Cliente;
+import Backend_Logica_Eventos.Evento;
 /**
  *
  * @author Antonio Zeno Maieran
@@ -29,7 +30,7 @@ public class GestorDatosSerializador {
             e.printStackTrace();
         }
     }
-    public static GestionDatos cargarTodo() {
+public static GestionDatos cargarTodo() {
     GestionDatos gestor = new GestionDatos();
 
     // Cargar usuarios
@@ -50,7 +51,17 @@ public class GestorDatosSerializador {
         System.out.println("No se han cargado los clientes correctamente, se creará una lista vacía.");
     }
 
+    // Cargar eventos
+    try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("eventos.dat"))) {
+        ArrayList<Evento> listaEventos = (ArrayList<Evento>) ois.readObject();
+        gestor.setListaEventos(listaEventos);
+        System.out.println("Eventos cargados.");
+    } catch (Exception e) {
+        System.out.println("No se han cargado los eventos correctamente, se creará una lista vacía.");
+    }
+
     return gestor;
 }
+
 }
 

@@ -10,6 +10,7 @@ import Backend_Logica.GestionDatos;
 import Backend_Logica.TarjetaCredito;
 import Backend_Logica_Clientes.GestorArchivosClientes;
 import Backend_Logica_Eventos.Evento;
+import Backend_Logica_Eventos.GestorArchivosEventos;
 import Backend_Logica_Reservas.GestorArchivosReservas;
 import Backend_Logica_Reservas.Reserva;
 import java.time.LocalDate;
@@ -360,8 +361,11 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
                 cliente.getTarjetaCredito().setDinero(resultado);
                 int entradasActualizadas = evento.getEntradasDisponibles() - ticketsAComprar;
                 evento.setMaxEntradas(entradasActualizadas);
+                gestor.setDatosEventoComprar(evento);
+                GestorArchivosEventos.guardarEventos(gestor.getListaEventos());
 
-                Reserva reserva = new Reserva(cliente, evento, LocalDateTime.now(), resultado);
+
+                Reserva reserva = new Reserva(cliente, evento, LocalDateTime.now(), total);
                 if (gestor.getClienteLogeado().getListaReservas() == null){
                 ArrayList<Reserva> reservas = new ArrayList<>();
                 reservas.add(reserva);
@@ -372,6 +376,7 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
                     gestor.getClienteLogeado().setListaReservas(reservas);
                 }
                 JOptionPane.showMessageDialog(this, "Pago realizado con éxito.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
                 paginaBase.setVisible(true);
             }
 
