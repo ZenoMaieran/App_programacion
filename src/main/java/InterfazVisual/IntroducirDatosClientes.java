@@ -12,6 +12,7 @@ import Backend_Logica_Clientes.GestorArchivosClientes;
 import Backend_Logica_Eventos.Evento;
 import Backend_Logica_Eventos.GestorArchivosEventos;
 import Backend_Logica_Reservas.GestorArchivosReservas;
+import Backend_Logica_Reservas.GestorFacturas;
 import Backend_Logica_Reservas.Reserva;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -278,109 +279,104 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
     private void seguirComprandoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seguirComprandoActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtCalle.getText().isEmpty() || txtNumero.getText().isEmpty() || txtCiudad.getText().isEmpty()
-                    || txtCodigoPostal.getText().isEmpty() || txtNombreTitular.getText().isEmpty() || txtNumeroTarjeta.getText().isEmpty()
-                    || txtFecha.getText().isEmpty() || txtDinero.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
+        if (txtCalle.getText().isEmpty() || txtNumero.getText().isEmpty() || txtCiudad.getText().isEmpty()
+                || txtCodigoPostal.getText().isEmpty() || txtNombreTitular.getText().isEmpty() || txtNumeroTarjeta.getText().isEmpty()
+                || txtFecha.getText().isEmpty() || txtDinero.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
 
-                JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos antes de pagar.", "Campos incompletos", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            String calle = txtCalle.getText();
-            int numero = Integer.parseInt(txtNumero.getText());
-            String ciudad = txtCiudad.getText();
-            int codigoPostal = Integer.parseInt(txtCodigoPostal.getText());
-            String nombreTitular = txtNombreTitular.getText();
-            String numeroTarjeta = txtNumeroTarjeta.getText();
-            String textoFecha = txtFecha.getText();
-            double dinero = Double.parseDouble(txtDinero.getText());
-            boolean vip = checkVIP.isSelected();
-            String telefono = txtTelefono.getText();
-
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yy");
-            LocalDate fechaCaducidad = LocalDate.parse(textoFecha, formatter);
-
-            Direccion direccion = new Direccion(calle, numero, ciudad, codigoPostal);
-            TarjetaCredito tarjeta = new TarjetaCredito(nombreTitular, numeroTarjeta, fechaCaducidad, dinero);
-
-            if (gestor.getUsuarioLogeado() == null) {
-                JOptionPane.showMessageDialog(this, "No hay usuario logueado. Por favor, reinicia sesión.", "Error de sesión", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            Cliente cliente = new Cliente(direccion, tarjeta, telefono, vip,
-                    gestor.getUsuarioLogeado().getNombre(),
-                    gestor.getUsuarioLogeado().getCorreo(),
-                    gestor.getUsuarioLogeado().getClave());
-
-            gestor.agregarCliente(cliente);
-            gestor.setClienteLogeado(cliente);
-            gestor.setUsuarioLogeado(null);
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Introduce solo números válidos en los campos numéricos.", "Error de formato numérico", JOptionPane.ERROR_MESSAGE);
-            return;
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(this, "La fecha debe tener el formato d/M/YY.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
-            return;
-        } catch (IllegalArgumentException e) {
-            JOptionPane.showMessageDialog(this, "Datos inválidos: " + e.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
-            return;
-        } catch (NullPointerException e) {
-            JOptionPane.showMessageDialog(this, "Ha ocurrido un error con los datos del usuario logeado. Por favor, reinicia sesión.", "Error de sesión", JOptionPane.ERROR_MESSAGE);
-            return;
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor, completa todos los campos antes de pagar.", "Campos incompletos", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        Cliente cliente = gestor.getClienteLogeado();
-        Evento evento = gestor.getDatosEventoComprar();
+        String calle = txtCalle.getText();
+        int numero = Integer.parseInt(txtNumero.getText());
+        String ciudad = txtCiudad.getText();
+        int codigoPostal = Integer.parseInt(txtCodigoPostal.getText());
+        String nombreTitular = txtNombreTitular.getText();
+        String numeroTarjeta = txtNumeroTarjeta.getText();
+        String textoFecha = txtFecha.getText();
+        double dinero = Double.parseDouble(txtDinero.getText());
+        boolean vip = checkVIP.isSelected();
+        String telefono = txtTelefono.getText();
 
-        if (cliente == null || cliente.getTarjetaCredito() == null || evento == null) {
-            JOptionPane.showMessageDialog(this, "Error interno: datos incompletos. Reinicia la aplicación.", "Error", JOptionPane.ERROR_MESSAGE);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yy");
+        LocalDate fechaCaducidad = LocalDate.parse(textoFecha, formatter);
+
+        Direccion direccion = new Direccion(calle, numero, ciudad, codigoPostal);
+        TarjetaCredito tarjeta = new TarjetaCredito(nombreTitular, numeroTarjeta, fechaCaducidad, dinero);
+
+        if (gestor.getUsuarioLogeado() == null) {
+            JOptionPane.showMessageDialog(this, "No hay usuario logueado. Por favor, reinicia sesión.", "Error de sesión", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        double total = ticketsAComprar * evento.getPrecio();
-        if (checkVIP.isSelected()) {
-            total *= 0.9;
-        }
-        double resultado = cliente.getTarjetaCredito().getDinero() - total;
+        Cliente cliente = new Cliente(direccion, tarjeta, telefono, vip,
+                gestor.getUsuarioLogeado().getNombre(),
+                gestor.getUsuarioLogeado().getCorreo(),
+                gestor.getUsuarioLogeado().getClave());
 
+        gestor.agregarCliente(cliente);
+        gestor.setClienteLogeado(cliente);
+        gestor.setUsuarioLogeado(null);
 
-            if (cliente.getTarjetaCredito().getDinero() >= total) {
-                int opcion = JOptionPane.showConfirmDialog(
-                    this,
-                    "¿Estás seguro de realizar el pago?",
-                    "Confirmación de pago",
-                    JOptionPane.YES_NO_OPTION
-                );
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Introduce solo números válidos en los campos numéricos.", "Error de formato numérico", JOptionPane.ERROR_MESSAGE);
+        return;
+    } catch (DateTimeParseException e) {
+        JOptionPane.showMessageDialog(this, "La fecha debe tener el formato d/M/YY.", "Error de formato de fecha", JOptionPane.ERROR_MESSAGE);
+        return;
+    } catch (IllegalArgumentException e) {
+        JOptionPane.showMessageDialog(this, "Datos inválidos: " + e.getMessage(), "Error de validación", JOptionPane.ERROR_MESSAGE);
+        return;
+    } catch (NullPointerException e) {
+        JOptionPane.showMessageDialog(this, "Ha ocurrido un error con los datos del usuario logeado. Por favor, reinicia sesión.", "Error de sesión", JOptionPane.ERROR_MESSAGE);
+        return;
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Ha ocurrido un error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-                if (opcion == JOptionPane.YES_OPTION) {
-                    cliente.getTarjetaCredito().setDinero(resultado);
+    Cliente cliente = gestor.getClienteLogeado();
+    Evento evento = gestor.getDatosEventoComprar();
 
-                    // 📄 AQUÍ VA LA LÓGICA DE CREAR LA RESERVA + GUARDAR LA FACTURA
+    if (cliente == null || cliente.getTarjetaCredito() == null || evento == null) {
+        JOptionPane.showMessageDialog(this, "Error interno: datos incompletos. Reinicia la aplicación.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-                    // Crear reserva
-                    //Reserva reserva = new Reserva(cliente, evento, ticketsAComprar, LocalDateTime.now());
-                    //gestor.agregarReserva(reserva);
+    double total = ticketsAComprar * evento.getPrecio();
+if (checkVIP.isSelected()) {
+    total *= 0.9;
+}
 
-                    // Guardar en archivo
-                    //GestorArchivosReservas.guardarReserva(reserva);
+double resultado = cliente.getTarjetaCredito().getDinero() - total;
 
-                    // Guardar factura
-                   // gestor.generarFacturaTxt(reserva); // ← solo si ya tienes este método implementado
+if (cliente.getTarjetaCredito().getDinero() >= total) {
+    int opcion = JOptionPane.showConfirmDialog(
+        this,
+        "¿Estás seguro de realizar el pago?",
+        "Confirmación de pago",
+        JOptionPane.YES_NO_OPTION
+    );
 
-                    JOptionPane.showMessageDialog(this, "Reserva realizada con éxito.\nFactura generada en la carpeta correspondiente.");
-                    this.dispose(); // cerrar ventana actual si deseas
-                    paginaBase.setVisible(true); // volver a la ventana anterior
-                }
+    if (opcion == JOptionPane.YES_OPTION) {
+        cliente.getTarjetaCredito().setDinero(resultado);
 
-            } else {
-                JOptionPane.showMessageDialog(this, "No hay suficiente dinero en la tarjeta.", "Fondos insuficientes", JOptionPane.ERROR_MESSAGE);
-            }
+        double precioFinal = total;
 
+        Reserva reserva = new Reserva(cliente, evento, LocalDateTime.now(), precioFinal);
+        ArrayList<Reserva> reservas = GestorArchivosReservas.cargarReservas();
+        reservas.add(reserva);
+        GestorArchivosReservas.guardarReservas(reservas);
+        GestorFacturas.generarFacturaTxt(reserva);
+
+        JOptionPane.showMessageDialog(this, "Reserva realizada con éxito.\nFactura generada en la carpeta correspondiente.");
+        this.dispose(); // cerrar ventana actual si deseas
+        paginaBase.setVisible(true); // volver a la ventana anterior
+    }
+
+} else {
+    JOptionPane.showMessageDialog(this, "No hay suficiente dinero en la tarjeta.", "Fondos insuficientes", JOptionPane.ERROR_MESSAGE);
+}
 
     }//GEN-LAST:event_seguirComprandoActionPerformed
 
