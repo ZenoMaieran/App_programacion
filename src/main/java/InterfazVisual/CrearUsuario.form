@@ -51,7 +51,7 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="contraseñaFT" pref="116" max="32767" attributes="0"/>
-                                  <Component id="validacionFT" max="32767" attributes="0"/>
+                                  <Component id="validacion_contraseñaFT" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -86,7 +86,7 @@
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="validacionFT" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="validacion_contraseñaFT" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="33" max="32767" attributes="0"/>
               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
@@ -105,9 +105,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JFormattedTextField" name="nombreFT">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nombreFTActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
@@ -148,7 +145,7 @@
     </Component>
     <Component class="javax.swing.JPasswordField" name="contrase&#xf1;aFT">
     </Component>
-    <Component class="javax.swing.JPasswordField" name="validacionFT">
+    <Component class="javax.swing.JPasswordField" name="validacion_contrase&#xf1;aFT">
     </Component>
   </SubComponents>
 </Form>

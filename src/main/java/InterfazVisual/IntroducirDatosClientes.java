@@ -357,7 +357,7 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
                 reservas.add(reserva);
                 GestorArchivosReservas.guardarReservas(reservas);
                 JOptionPane.showMessageDialog(this, "Pago realizado con éxito.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-                PaginaBase base = new PaginaBase(gestor, cliente);
+                PaginaBase base = new PaginaBase(gestor);
                 base.setVisible(true);
                 this.setVisible(false);
             }
