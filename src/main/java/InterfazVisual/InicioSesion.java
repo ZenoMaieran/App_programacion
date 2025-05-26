@@ -7,17 +7,20 @@ package InterfazVisual;
 import javax.swing.JFrame;
 import Backend_Logica.GestionDatos;
 import Backend_Logica.Persona;
+import Backend_Logica_Clientes.Cliente;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author anton
  */
 public class InicioSesion extends javax.swing.JFrame {
+
     private GestionDatos gestor;
     private JFrame ventanaBase;
-    
+
     /**
      * Creates new form InicioSesion
      */
@@ -126,7 +129,7 @@ public class InicioSesion extends javax.swing.JFrame {
         // TODO add your handling code here:
         String email = emailT.getText();
         String contraseña = contraseñaT.getText();
-        if (email.equals("admin@javaevents.com") && contraseña.equals("admin")){
+        if (email.equals("admin@javaevents.com") && contraseña.equals("admin")) {
             AdminEventosFrame admin = new AdminEventosFrame();
             this.setVisible(false);
             admin.setVisible(true);
@@ -134,28 +137,41 @@ public class InicioSesion extends javax.swing.JFrame {
         }
         ArrayList<Persona> auxiliar = gestor.getListaUsuarios();
         Iterator<Persona> iterator = auxiliar.iterator();
+
         boolean existe = false;
         boolean comprobarContrasena = false;
-        while (!existe && iterator.hasNext()){
+
+        while (!existe && iterator.hasNext()) {
             Persona p = iterator.next();
-            if (p.getCorreo().equals(email)){
+
+            if (p.getCorreo().equals(email)) {
                 existe = true;
+
                 if (p.getClave().equals(contraseña)) {
                     comprobarContrasena = true;
                     gestor.setUsuarioLogeado(p);
+
+                    // Comprobar si también está en la lista de clientes
+                    ArrayList<Cliente> clientes = gestor.getListaClientes();
+
+                    for (Cliente c : clientes) {
+                        if (c.getCorreo().equals(p.getCorreo())) {
+                            gestor.setClienteLogeado(c); // si quieres guardar al cliente actual
+                            break;
+                        }
+                    }
                 }
-                
             }
         }
-        if (existe && comprobarContrasena){
+        if (existe && comprobarContrasena) {
             JOptionPane.showMessageDialog(null, "Has iniciado sesión correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
             PaginaBase cliente = new PaginaBase(gestor);
             cliente.setVisible(true);
             this.setVisible(false);
-        } else if (existe && !comprobarContrasena){
-            JOptionPane.showMessageDialog(this,"Error al iniciar sesión, contraseña incorrecta","ERROR",JOptionPane.WARNING_MESSAGE);
+        } else if (existe && !comprobarContrasena) {
+            JOptionPane.showMessageDialog(this, "Error al iniciar sesión, contraseña incorrecta", "ERROR", JOptionPane.WARNING_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this,"Error al iniciar sesión, crea una cuenta primero. ","ERROR",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al iniciar sesión, crea una cuenta primero. ", "ERROR", JOptionPane.WARNING_MESSAGE);
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed

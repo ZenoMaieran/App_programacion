@@ -17,6 +17,7 @@ import InterfazVisual.PaginaCompra;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import javax.swing.JFrame;
 
 /**
  *
@@ -30,10 +31,12 @@ public class Eventos extends javax.swing.JFrame {
     private ArrayList<Evento> eventos;
     private ListIterator<Evento> iterador;
     private GestionDatos gestor;
+    private JFrame paginaBase;
 
-    public Eventos(GestionDatos gestor) {
+    public Eventos(GestionDatos gestor, JFrame base) {
         initComponents();
         this.gestor = gestor;
+        this.paginaBase = base;
         this.setLocationRelativeTo(null);
         this.eventos = new ArrayList();
         eventos = GestorArchivosEventos.cargarEventos();
@@ -69,7 +72,12 @@ public class Eventos extends javax.swing.JFrame {
         anterior = new javax.swing.JButton();
         panelDatosEventos = new InterfazVisual.PanelDatosEventos();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("EVENTOS DISPONIBLES:");
@@ -174,7 +182,7 @@ public class Eventos extends javax.swing.JFrame {
             Evento evento = new Evento(titulo, tipo, direccion, fecha, precio, calificacion, ticketsDisponibles);
             gestor.setDatosEventoComprar(evento);
             System.out.println("Evento guardado bien");
-            PaginaCompra datosCompra = new PaginaCompra(gestor);
+            PaginaCompra datosCompra = new PaginaCompra(gestor, paginaBase);
             this.setVisible(false);
             datosCompra.setVisible(true);
         } catch (NumberFormatException e) {
@@ -204,6 +212,11 @@ public class Eventos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay eventos anteriores", "ERROR", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_anteriorActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        paginaBase.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

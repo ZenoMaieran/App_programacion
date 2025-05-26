@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,13 +20,15 @@ import javax.swing.JOptionPane;
 public class PaginaCompra extends javax.swing.JFrame {
 
     private GestionDatos gestor;
+    private JFrame paginaBase;
 
     /**
      * Creates new form PaginaCompra
      */
-    public PaginaCompra(GestionDatos gestor) {
+    public PaginaCompra(GestionDatos gestor, JFrame base) {
         initComponents();
         this.gestor = gestor;
+        this.paginaBase = base;
         panelDatosEventos.mostrarEvento(gestor.getDatosEventoComprar());
     }
 
@@ -52,7 +55,12 @@ public class PaginaCompra extends javax.swing.JFrame {
 
         label1.setText("label1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel1.setText("DATOS DEL EVENTO");
@@ -124,7 +132,7 @@ public class PaginaCompra extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             int tickets = Integer.parseInt(txtTicketsAComprar.getText());
-            IntroducirDatosClientes pagar = new IntroducirDatosClientes(gestor, tickets);
+            IntroducirDatosClientes pagar = new IntroducirDatosClientes(gestor, tickets, paginaBase);
             this.setVisible(false);
             pagar.setVisible(true);
         } catch (NumberFormatException e) {
@@ -133,6 +141,11 @@ public class PaginaCompra extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al continuar con el pago: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        paginaBase.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

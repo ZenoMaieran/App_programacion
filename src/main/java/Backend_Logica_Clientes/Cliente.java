@@ -29,7 +29,6 @@ public class Cliente extends Persona implements Serializable {
     private TarjetaCredito tarjetaCredito;
     private String telefono;
     private boolean vip;
-    
     private ArrayList<Reserva> listaReservas;
 
     /**
@@ -141,13 +140,11 @@ public class Cliente extends Persona implements Serializable {
         return getCorreo();
 }
 
-
     @Override
     public String toString() {
-        return super.toString() + "\n" +
-               "Teléfono: " + telefono + "\n" +
-               "Dirección: " + direccion + "\n" +
-               "Tarjeta: " + tarjetaCredito + "\n" +
-               "VIP: " + (vip ? "Sí" : "No");
+        return "Cliente{" + "direccion=" + direccion + ", tarjetaCredito=" + tarjetaCredito + ", telefono=" + telefono + ", vip=" + vip + ", listaReservas=" + listaReservas + '}';
     }
+
+
+
 }

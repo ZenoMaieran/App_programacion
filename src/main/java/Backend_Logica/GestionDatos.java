@@ -19,11 +19,12 @@ public class GestionDatos implements Serializable{
         this.listaClientes = new ArrayList<>();
     }
     
-    private ArrayList listaUsuarios; 
-    private ArrayList listaClientes;
+    private ArrayList<Persona> listaUsuarios; 
+    private ArrayList<Cliente> listaClientes;
     private Persona usuarioLogeado;
     private Evento datosEventoComprar;
     private Cliente clienteLogeado;
+    
     
 
     /**
@@ -88,7 +89,7 @@ public class GestionDatos implements Serializable{
      *
      * @return the value of listaClientes
      */
-    public ArrayList getListaClientes() {
+    public ArrayList<Cliente> getListaClientes() {
         return listaClientes;
     }
 
@@ -97,7 +98,7 @@ public class GestionDatos implements Serializable{
      *
      * @param listaClientes new value of listaClientes
      */
-    public void setListaClientes(ArrayList listaClientes) {
+    public void setListaClientes(ArrayList<Cliente> listaClientes) {
         this.listaClientes = listaClientes;
     }
 
@@ -107,7 +108,7 @@ public class GestionDatos implements Serializable{
      *
      * @return the value of listaUsuarios
      */
-    public ArrayList getListaUsuarios() {
+    public ArrayList<Persona> getListaUsuarios() {
         return listaUsuarios;
     }
 
@@ -116,7 +117,7 @@ public class GestionDatos implements Serializable{
      *
      * @param listaUsuarios new value of listaUsuarios
      */
-    public void setListaUsuarios(ArrayList listaUsuarios) {
+    public void setListaUsuarios(ArrayList<Persona> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
     

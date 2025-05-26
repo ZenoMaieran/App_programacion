@@ -40,5 +40,11 @@ public class Reserva implements Serializable {
     public double getTotal() {
         return precioFinal;
     }
+
+    @Override
+    public String toString() {
+        return "Reserva{" + "cliente=" + cliente + ", evento=" + evento + ", fechaReserva=" + fechaReserva + ", precioFinal=" + precioFinal + '}';
+    }
+    
     
 }

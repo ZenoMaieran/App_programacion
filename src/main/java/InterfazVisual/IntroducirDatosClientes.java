@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,13 +28,15 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
 
     private GestionDatos gestor;
     private int ticketsAComprar;
+    private JFrame paginaBase;
 
     /**
      * Creates new form IntroducirDatosClientes
      */
-    public IntroducirDatosClientes(GestionDatos gestor, int tickets) {
+    public IntroducirDatosClientes(GestionDatos gestor, int tickets, JFrame base) {
         initComponents();
         this.gestor = gestor;
+        this.paginaBase = base;
         this.ticketsAComprar = tickets;
     }
 
@@ -81,7 +84,12 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
 
         jTextField2.setText("jTextField2");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Para realizar una compra, primero introduce los siguientes datos:");
@@ -307,7 +315,6 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
             gestor.agregarCliente(cliente);
             gestor.setClienteLogeado(cliente);
             gestor.setUsuarioLogeado(null);
-            GestorArchivosClientes.guardarClientes(gestor.getListaClientes());
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Introduce solo números válidos en los campos numéricos.", "Error de formato numérico", JOptionPane.ERROR_MESSAGE);
@@ -355,14 +362,17 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
                 evento.setMaxEntradas(entradasActualizadas);
 
                 Reserva reserva = new Reserva(cliente, evento, LocalDateTime.now(), resultado);
+                if (gestor.getClienteLogeado().getListaReservas() == null){
                 ArrayList<Reserva> reservas = new ArrayList<>();
                 reservas.add(reserva);
                 gestor.getClienteLogeado().setListaReservas(reservas);
-                GestorArchivosReservas.guardarReservas(reservas);
+                } else {
+                    ArrayList<Reserva> reservas = gestor.getClienteLogeado().getListaReservas();
+                    reservas.add(reserva);
+                    gestor.getClienteLogeado().setListaReservas(reservas);
+                }
                 JOptionPane.showMessageDialog(this, "Pago realizado con éxito.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-                PaginaBase base = new PaginaBase(gestor);
-                base.setVisible(true);
-                this.setVisible(false);
+                paginaBase.setVisible(true);
             }
 
         } else {
@@ -375,6 +385,11 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
     private void checkVIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkVIPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_checkVIPActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        paginaBase.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

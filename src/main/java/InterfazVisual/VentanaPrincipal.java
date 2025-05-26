@@ -17,8 +17,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
-        gestor = GestorDatosSerializador.cargar();
+        gestor = GestorDatosSerializador.cargarTodo();
         
+        //System.out.println(gestor.getListaClientes().toString());
+        //System.out.println(gestor.getListaUsuarios().toString());
+        //System.out.println(gestor.getListaClientes().getFirst().getListaReservas().toString());
         this.setLocationRelativeTo(null);
         initComponents();
     }

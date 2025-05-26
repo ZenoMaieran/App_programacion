@@ -1,72 +1,49 @@
-    package InterfazVisual;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package InterfazVisual;
 
-    import Backend_Logica.GestionDatos;
-    import Backend_Logica_Clientes.Cliente;
-    import Backend_Logica_Eventos.Evento;
-    import Backend_Logica_Reservas.GestorArchivosReservas;
-    import Backend_Logica_Reservas.Reserva;
-    import java.util.ArrayList;
-    import javax.swing.*;
-    import javax.swing.table.DefaultTableModel;
-    import java.util.List;
+import Backend_Logica.GestionDatos;
+import Backend_Logica_Reservas.Reserva;
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.table.DefaultTableModel;
 
-    public class ReservasClientes extends javax.swing.JFrame {
+/**
+ *
+ * @author anton
+ */
+public class ReservasClientes extends javax.swing.JFrame {
 
-    private final GestionDatos gestion;
-    private final Cliente cliente;
-    private final JFrame ventanaBase;
-    private final JTable tablaReservas;      // final: siempre apunta al mismo objeto
+    private GestionDatos gestor;
+    private JFrame paginaBase;
 
-    public ReservasClientes(GestionDatos gestion, JFrame ventanaBase) {
-        this.gestion     = gestion;
-        this.cliente     = gestion.getClienteLogeado();
-        this.ventanaBase = ventanaBase;
+    /**
+     * Creates new form ReservasClientes
+     */
+    public ReservasClientes(GestionDatos gestor, JFrame base) {
+        initComponents();
+        this.gestor = gestor;
+        this.paginaBase = base;
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("Cliente");
+        modelo.addColumn("Evento");
+        modelo.addColumn("Fecha Reserva");
+        modelo.addColumn("Precio Final");
+        
+        ArrayList<Reserva> reservas = gestor.getClienteLogeado().getListaReservas();
+        for (Reserva p : reservas) {
+            modelo.addRow(new Object[]{p.getCliente().getNombre(), p.getEvento().getTitulo(), p.getFechaReserva(), p.getPrecioFinal()});
+        }
+        
+        tablaReservas.setModel(modelo);
 
-        // El correo lo sacamos directamente del cliente logeado
-        String correoCliente = cliente.getCorreo();   // o getCorreoElectronico()
-
-        initComponents();                 // deja que NetBeans dibuje el frame base
-
-        /* ---------- tabla y scroll ---------- */
-        DefaultTableModel modelo = new DefaultTableModel(
-                new String[]{"Título", "Fecha", "Total"},   // cabeceras
-                0                                           // sin filas iniciales
-        );
-        tablaReservas = new JTable(modelo);
-        JScrollPane scroll = new JScrollPane(tablaReservas);
-
-        // Mejor usar un layout estándar. BorderLayout.CENTER llena toda la ventana
-        add(scroll, java.awt.BorderLayout.CENTER);
-
-        /* ---------- llenamos la tabla ---------- */
-        cargarTabla(correoCliente);
-
-        setLocationRelativeTo(null);   // centramos la ventana
     }
 
     private ReservasClientes() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-        /** Llena la tabla con las reservas del correo indicado */
-        private void cargarTabla(String correoCliente) {
-            DefaultTableModel modelo = (DefaultTableModel) tablaReservas.getModel();
-            modelo.setRowCount(0);   // limpia
-
-            List<Reserva> reservas = GestorArchivosReservas.obtenerReservasCliente(correoCliente);
-            for (Reserva r : reservas) {
-                Evento ev = r.getEvento();    // suponiendo que Reserva conoce a su Evento
-                modelo.addRow(new Object[]{
-                    ev.getTitulo(),
-                    r.getFechaReserva().toString(),      // o formatea como quieras
-                    r.getTotal() + " €"
-                });
-            }
-        }
-
-
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -77,31 +54,43 @@
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaReservas = new javax.swing.JTable();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tablaReservas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(tablaReservas);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(93, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
-        ventanaBase.setVisible(true);
-    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -139,5 +128,7 @@
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tablaReservas;
     // End of variables declaration//GEN-END:variables
 }
