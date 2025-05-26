@@ -24,6 +24,7 @@ public class GestionDatos implements Serializable{
     private Persona usuarioLogeado;
     private Evento datosEventoComprar;
     private Cliente clienteLogeado;
+    
 
     /**
      * Get the value of clienteLogeado

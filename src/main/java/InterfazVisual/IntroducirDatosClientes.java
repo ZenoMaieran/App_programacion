@@ -8,6 +8,7 @@ import Backend_Logica_Clientes.Cliente;
 import Backend_Logica.Direccion;
 import Backend_Logica.GestionDatos;
 import Backend_Logica.TarjetaCredito;
+import Backend_Logica_Clientes.GestorArchivosClientes;
 import Backend_Logica_Eventos.Evento;
 import Backend_Logica_Reservas.GestorArchivosReservas;
 import Backend_Logica_Reservas.Reserva;
@@ -306,6 +307,7 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
             gestor.agregarCliente(cliente);
             gestor.setClienteLogeado(cliente);
             gestor.setUsuarioLogeado(null);
+            GestorArchivosClientes.guardarClientes(gestor.getListaClientes());
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Introduce solo números válidos en los campos numéricos.", "Error de formato numérico", JOptionPane.ERROR_MESSAGE);
@@ -355,6 +357,7 @@ public class IntroducirDatosClientes extends javax.swing.JFrame {
                 Reserva reserva = new Reserva(cliente, evento, LocalDateTime.now(), resultado);
                 ArrayList<Reserva> reservas = new ArrayList<>();
                 reservas.add(reserva);
+                gestor.getClienteLogeado().setListaReservas(reservas);
                 GestorArchivosReservas.guardarReservas(reservas);
                 JOptionPane.showMessageDialog(this, "Pago realizado con éxito.", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
                 PaginaBase base = new PaginaBase(gestor);

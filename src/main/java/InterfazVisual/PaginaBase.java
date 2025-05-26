@@ -107,6 +107,11 @@ public class PaginaBase extends javax.swing.JFrame {
         menuReservas.setText("Reservas");
 
         jMenuItem2.setText("Ir a reservas");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         menuReservas.add(jMenuItem2);
 
         jMenuBar1.add(menuReservas);
@@ -200,6 +205,13 @@ public class PaginaBase extends javax.swing.JFrame {
         this.setVisible(false);
         inicio.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        ReservasClientes reservas = new ReservasClientes(gestor, this);
+        this.setVisible(false);
+        reservas.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments

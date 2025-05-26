@@ -6,7 +6,9 @@ package Backend_Logica_Clientes;
 import Backend_Logica.Direccion;
 import Backend_Logica.Persona;
 import Backend_Logica.TarjetaCredito;
+import Backend_Logica_Reservas.Reserva;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,6 +29,27 @@ public class Cliente extends Persona implements Serializable {
     private TarjetaCredito tarjetaCredito;
     private String telefono;
     private boolean vip;
+    
+    private ArrayList<Reserva> listaReservas;
+
+    /**
+     * Get the value of listaReservas
+     *
+     * @return the value of listaReservas
+     */
+    public ArrayList<Reserva> getListaReservas() {
+        return listaReservas;
+    }
+
+    /**
+     * Set the value of listaReservas
+     *
+     * @param listaReservas new value of listaReservas
+     */
+    public void setListaReservas(ArrayList<Reserva> listaReservas) {
+        this.listaReservas = listaReservas;
+    }
+
 
     /**
      * Get the value of vip

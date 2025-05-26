@@ -18,9 +18,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         gestor = GestorDatosSerializador.cargar();
+        
         this.setLocationRelativeTo(null);
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

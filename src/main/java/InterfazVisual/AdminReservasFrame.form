@@ -79,14 +79,6 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="btnA&#xf1;adir">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="A&#xf1;adir"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnA&#xf1;adirActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JButton" name="btnEditar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Editar"/>

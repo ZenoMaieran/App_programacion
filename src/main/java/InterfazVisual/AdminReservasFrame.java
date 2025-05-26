@@ -76,7 +76,6 @@ public class AdminReservasFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaReservas = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        btnAñadir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -101,14 +100,6 @@ public class AdminReservasFrame extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(tablaReservas);
-
-        btnAñadir.setText("Añadir");
-        btnAñadir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAñadirActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnAñadir);
 
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -210,11 +201,6 @@ public class AdminReservasFrame extends javax.swing.JFrame {
         llenarTabla(reservas);
     }//GEN-LAST:event_limpiarFiltrosActionPerformed
 
-    private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-        CrearReservaFrame crear = new CrearReservaFrame(modelo, reservas, listaClientes, listaEventos, null, -1);
-        crear.setVisible(true);
-    }//GEN-LAST:event_btnAñadirActionPerformed
-
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int fila = tablaReservas.getSelectedRow();  // <-- obtenemos la fila seleccionada
         if (fila >= 0) {
@@ -287,7 +273,6 @@ public class AdminReservasFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Buscar;
-    private javax.swing.JButton btnAñadir;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;

@@ -2,58 +2,69 @@
 
     import Backend_Logica.GestionDatos;
     import Backend_Logica_Clientes.Cliente;
+    import Backend_Logica_Eventos.Evento;
     import Backend_Logica_Reservas.GestorArchivosReservas;
     import Backend_Logica_Reservas.Reserva;
+    import java.util.ArrayList;
     import javax.swing.*;
     import javax.swing.table.DefaultTableModel;
     import java.util.List;
 
     public class ReservasClientes extends javax.swing.JFrame {
 
-        private String correoCliente;
-        private GestionDatos gestion;
-        private Cliente cliente;
-        private javax.swing.JTable tablaReservas;
+    private final GestionDatos gestion;
+    private final Cliente cliente;
+    private final JFrame ventanaBase;
+    private final JTable tablaReservas;      // final: siempre apunta al mismo objeto
 
+    public ReservasClientes(GestionDatos gestion, JFrame ventanaBase) {
+        this.gestion     = gestion;
+        this.cliente     = gestion.getClienteLogeado();
+        this.ventanaBase = ventanaBase;
 
-        public ReservasClientes(GestionDatos gestion, String correoCliente) {
-            this.correoCliente = correoCliente;
-            this.gestion = gestion;
-            this.cliente = gestion.getClienteLogeado(); 
-            initComponents();
-            
-            tablaReservas = new JTable(new DefaultTableModel(
-                new Object[][] {},
-                new String[] {"Título", "Fecha", "Total"}
-            ));
-            JScrollPane scrollPane = new JScrollPane(tablaReservas);
-            getContentPane().setLayout(null); // para usar .setBounds directamente
-            scrollPane.setBounds(20, 20, 360, 250);
-            getContentPane().add(scrollPane);
+        // El correo lo sacamos directamente del cliente logeado
+        String correoCliente = cliente.getCorreo();   // o getCorreoElectronico()
 
-            this.setLocationRelativeTo(null);
-            cargarTabla();
-        }
+        initComponents();                 // deja que NetBeans dibuje el frame base
 
+        /* ---------- tabla y scroll ---------- */
+        DefaultTableModel modelo = new DefaultTableModel(
+                new String[]{"Título", "Fecha", "Total"},   // cabeceras
+                0                                           // sin filas iniciales
+        );
+        tablaReservas = new JTable(modelo);
+        JScrollPane scroll = new JScrollPane(tablaReservas);
 
-        
-        private void cargarTabla() {
+        // Mejor usar un layout estándar. BorderLayout.CENTER llena toda la ventana
+        add(scroll, java.awt.BorderLayout.CENTER);
+
+        /* ---------- llenamos la tabla ---------- */
+        cargarTabla(correoCliente);
+
+        setLocationRelativeTo(null);   // centramos la ventana
+    }
+
+    private ReservasClientes() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+        /** Llena la tabla con las reservas del correo indicado */
+        private void cargarTabla(String correoCliente) {
             DefaultTableModel modelo = (DefaultTableModel) tablaReservas.getModel();
-            modelo.setRowCount(0);
+            modelo.setRowCount(0);   // limpia
 
             List<Reserva> reservas = GestorArchivosReservas.obtenerReservasCliente(correoCliente);
             for (Reserva r : reservas) {
+                Evento ev = r.getEvento();    // suponiendo que Reserva conoce a su Evento
                 modelo.addRow(new Object[]{
-                    r.getEvento().getTitulo(),
-                    r.getFechaReserva(),
-                    r.getTotal() + "€"
+                    ev.getTitulo(),
+                    r.getFechaReserva().toString(),      // o formatea como quieras
+                    r.getTotal() + " €"
                 });
             }
         }
-        
-        public ReservasClientes() {
-            this(new GestionDatos(), "cliente@dummy.com");
-}
+
+
 
 
 
@@ -66,7 +77,12 @@
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,6 +97,11 @@
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        ventanaBase.setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
