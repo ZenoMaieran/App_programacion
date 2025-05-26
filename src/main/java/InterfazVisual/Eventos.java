@@ -33,6 +33,7 @@ public class Eventos extends javax.swing.JFrame {
     private GestionDatos gestor;
     private JFrame paginaBase;
     private Evento eventoActual;
+    private ArrayList<Evento> listaEventosFiltrados;
 
     public Eventos(GestionDatos gestor, JFrame base) {
         initComponents();
@@ -70,6 +71,12 @@ public class Eventos extends javax.swing.JFrame {
         siguiente = new javax.swing.JButton();
         anterior = new javax.swing.JButton();
         panelDatosEventos = new InterfazVisual.PanelDatosEventos();
+        jLabel3 = new javax.swing.JLabel();
+        txtCiudad = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        comboTipo = new javax.swing.JComboBox<>();
+        anteriorConFiltro = new javax.swing.JToggleButton();
+        siguienteConFiltro = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -89,6 +96,11 @@ public class Eventos extends javax.swing.JFrame {
         jButton1.setBackground(new java.awt.Color(51, 204, 255));
         jButton1.setText("FILTRAR");
         jButton1.setAlignmentX(0.5F);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("COMPRAR");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -111,54 +123,105 @@ public class Eventos extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Ciudad:");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setText("Tipo: ");
+
+        comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Concierto", "Deporte", "Musical", "Teatro" }));
+
+        anteriorConFiltro.setText("Anterior con Filtro");
+        anteriorConFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anteriorConFiltroActionPerformed(evt);
+            }
+        });
+
+        siguienteConFiltro.setText("Siguiente con Filtro");
+        siguienteConFiltro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                siguienteConFiltroActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(70, 70, 70))
+                .addComponent(jLabel2)
+                .addGap(344, 344, 344))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(182, 182, 182)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(536, 536, 536)
-                                .addComponent(jLabel2))))
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(58, 58, 58)
-                        .addComponent(panelDatosEventos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(panelDatosEventos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(anteriorConFiltro)
+                                .addGap(70, 70, 70)
+                                .addComponent(siguienteConFiltro))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(136, 136, 136)
+                                .addComponent(jButton1))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
+                        .addGap(74, 74, 74)
                         .addComponent(anterior, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(106, 106, 106)
-                        .addComponent(siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(175, 175, 175)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(232, Short.MAX_VALUE))
+                        .addComponent(siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(78, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(20, 20, 20)
-                .addComponent(panelDatosEventos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(anterior)
-                    .addComponent(siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
-                .addComponent(jButton2)
-                .addGap(377, 377, 377)
-                .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(panelDatosEventos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(anterior)
+                            .addComponent(siguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel2)
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(comboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(53, 53, 53)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(anteriorConFiltro)
+                            .addComponent(siguienteConFiltro))
+                        .addGap(29, 29, 29)
+                        .addComponent(jButton1)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -210,7 +273,9 @@ public class Eventos extends javax.swing.JFrame {
             indiceEventoActual++;
             eventoActual = eventos.get(indiceEventoActual);
             panelDatosEventos.mostrarEvento(eventoActual);
-        }
+        } else {
+        JOptionPane.showMessageDialog(this, "Ya estás en el ultimo evento.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+    }
     }//GEN-LAST:event_siguienteActionPerformed
 
     private void anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorActionPerformed
@@ -219,13 +284,61 @@ public class Eventos extends javax.swing.JFrame {
             indiceEventoActual--;
             eventoActual = eventos.get(indiceEventoActual);
             panelDatosEventos.mostrarEvento(eventoActual);
-        }
+        } else {
+        JOptionPane.showMessageDialog(this, "Ya estás en el primer evento.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+    }
     }//GEN-LAST:event_anteriorActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         paginaBase.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String ciudadFiltro = txtCiudad.getText().trim().toLowerCase();
+        String tipoFiltro = comboTipo.getSelectedItem().toString();
+        listaEventosFiltrados = new ArrayList();
+
+
+        for (Evento e : gestor.getListaEventos()) {
+            boolean coincideCiudad = ciudadFiltro.isEmpty() || e.getDireccion().getCiudad().toLowerCase().contains(ciudadFiltro);
+            boolean coincideTipo = tipoFiltro.equals("Todos") || e.getTipo().equals(tipoFiltro);
+
+            if (coincideCiudad && coincideTipo) {
+                listaEventosFiltrados.add(e);
+            }
+        }
+        indiceEventoActual = 0;
+        if (!listaEventosFiltrados.isEmpty()) {
+        panelDatosEventos.mostrarEvento(listaEventosFiltrados.get(indiceEventoActual));
+    } else {
+           JOptionPane.showMessageDialog(this, "No hay eventos con este filtro", "Aviso", JOptionPane.INFORMATION_MESSAGE); 
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void anteriorConFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorConFiltroActionPerformed
+        // TODO add your handling code here:
+        if (indiceEventoActual > 0) {
+            indiceEventoActual--;
+            eventoActual = listaEventosFiltrados.get(indiceEventoActual);
+            panelDatosEventos.mostrarEvento(eventoActual);
+        } else {
+        JOptionPane.showMessageDialog(this, "No hay mas eventos con estos filtros. ", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+    }
+    }//GEN-LAST:event_anteriorConFiltroActionPerformed
+
+    private void siguienteConFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteConFiltroActionPerformed
+        // TODO add your handling code here:
+        if (indiceEventoActual < listaEventosFiltrados.size() - 1) {
+            indiceEventoActual++;
+            eventoActual = listaEventosFiltrados.get(indiceEventoActual);
+            panelDatosEventos.mostrarEvento(eventoActual);
+        } else {
+        JOptionPane.showMessageDialog(this, "No hay mas eventos con estos filtros. ", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+    }
+    }//GEN-LAST:event_siguienteConFiltroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -264,12 +377,18 @@ public class Eventos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton anterior;
+    private javax.swing.JToggleButton anteriorConFiltro;
+    private javax.swing.JComboBox<String> comboTipo;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private InterfazVisual.PanelDatosEventos panelDatosEventos;
     private InterfazVisual.PanelDatosEventos panelDatosEventos1;
     private javax.swing.JButton siguiente;
+    private javax.swing.JToggleButton siguienteConFiltro;
+    private javax.swing.JTextField txtCiudad;
     // End of variables declaration//GEN-END:variables
 }
