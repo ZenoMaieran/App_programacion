@@ -80,6 +80,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+<<<<<<< Updated upstream
               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
@@ -90,6 +91,13 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   </Group>
+=======
+              <EmptySpace min="-2" pref="167" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="BusquedaEvento" max="32767" attributes="0"/>
+                  <Component id="ConsultarReservas" pref="130" max="32767" attributes="0"/>
+                  <Component id="jButton1" max="32767" attributes="0"/>
+>>>>>>> Stashed changes
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="BusquedaEvento" min="-2" pref="84" max="-2" attributes="0"/>
@@ -112,6 +120,7 @@
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+<<<<<<< Updated upstream
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -123,6 +132,15 @@
                   <Component id="ConsultarReservas" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="83" pref="140" max="32767" attributes="0"/>
+=======
+              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+              <Component id="BusquedaEvento" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="ConsultarReservas" min="-2" pref="20" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jButton1" min="-2" pref="23" max="-2" attributes="0"/>
+              <EmptySpace pref="72" max="32767" attributes="0"/>
+>>>>>>> Stashed changes
           </Group>
       </Group>
     </DimensionLayout>
@@ -173,6 +191,14 @@
         <Property name="text" type="java.lang.String" value="JavaEvents"/>
         <Property name="alignmentX" type="float" value="0.5"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Rese&#xf1;as"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

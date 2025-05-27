@@ -1,0 +1,17 @@
+====== FACTURA DE RESERVA ======
+Fecha de reserva: 2025-05-27T00:30:22.673934
+Importe: 40.0 €
+
+-- Datos del Evento --
+Título: prueba3
+Tipo: Teatro
+Dirección: Direccion{calle=austria, numero=3, ciudad=madrid, codigoPostal=12345}
+Fecha del evento: 2000-04-05T13:40
+
+-- Datos del Cliente --
+Nombre: alfonso
+Correo: alfonso@gmail.com
+Teléfono: 111222333
+Dirección: Direccion{calle=paloma, numero=1, ciudad=Madrid, codigoPostal=12345}
+VIP: Sí (10% descuento)
+===============================
